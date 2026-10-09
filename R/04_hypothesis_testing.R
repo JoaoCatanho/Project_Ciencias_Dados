@@ -171,7 +171,7 @@ h6 <- mw_test(eda_clf[target_class == 2L, revol_util], eda_clf[target_class == 0
 h6[, .(statistic, p_value, effect_size, magnitude = label_cliff(effect_size),
        n_a, n_b, median_a, median_b, ci_median_diff)]
 
-# ==== H7 — Interest rate differs by loan purpose (regression target) ========
+# ==== H7 — Interest rate differs by loan purpose (regression target) ======== tenho que tirar
 
 # * H0: `int_rate` has the same distribution for every purpose.
 # * H1: at least one purpose differs.
