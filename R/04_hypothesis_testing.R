@@ -61,11 +61,12 @@ data.table(set = c("classification (train+val)", "regression (train+val)",
 
 # ==== Assumption checks (normality) =========================================
 
-norm_tbl <- rbindlist(lapply(c("dti", "fico_range_low", "revol_util", "annual_inc", "int_rate"), function(v) {
+norm_vars <- c("dti", "annual_inc", "fico_range_low", "loan_amnt", "revol_util", "int_rate")
+norm_tbl <- rbindlist(lapply(norm_vars, function(v) {
   x <- cap_sample(eda_reg[[v]], 5000, SEED)
   st <- shapiro.test(x)
-  data.table(variable = v, shapiro_W = unname(st$statistic), shapiro_p = st$p.value,
-             skew = skewness(x))
+  data.table(column = v, shapiro_stat = unname(st$statistic), shapiro_p = st$p.value,
+             skew = skewness(x), n_used = length(x))
 }))
 save_table(norm_tbl, "hypothesis_normality")
 norm_tbl
