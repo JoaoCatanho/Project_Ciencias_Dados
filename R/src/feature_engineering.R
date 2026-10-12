@@ -66,14 +66,18 @@ add_features <- function(dt) {
     # F16 [classification only] annual payment burden relative to income
     payment_to_income    = safe_div(12 * installment, annual_inc),
     # F17 [classification only] issue year (origination-time context)
-    issue_year           = as.integer(format(issue_d, "%Y"))
+    issue_year           = as.integer(format(issue_d, "%Y")),
+    # F18 (Ramos) interação entre a dívida atual e o peso do novo empréstimo
+    dti_x_loan_to_income = dti * safe_div(loan_amnt, annual_inc),
+    # F19 (Ramos) [classificação apenas] idade do histórico de crédito em meses
+    credit_hist_months   = as.numeric(issue_d - earliest_cr_line) / 30.44
   )]
   dt[]
 }
 
 #' Documentation table for the engineered features (exported to CSV).
 feature_catalog <- function() {
-  data.table(
+  out <- data.table(
     feature = c("fico_mid", "log_annual_inc", "loan_to_income",
                 "revol_bal_to_income", "emp_length_years",
                 "emp_length_missing", "open_acc_ratio", "any_delinq_2yrs",
@@ -142,4 +146,25 @@ feature_catalog <- function() {
                             "no (issue_d is not a pre-pricing input)"),
     classification_eligible = rep("yes", 17)
   )
+  novas <- data.table(
+    feature = c("dti_x_loan_to_income", "credit_hist_months"),
+    source_columns = c("dti, loan_amnt, annual_inc", "earliest_cr_line, issue_d"),
+    formula = c("dti * loan_amnt / annual_inc", "(issue_d - earliest_cr_line) em dias / 30.44"),
+    rationale = c("dívida existente x peso do novo empréstimo (alavancagem composta)",
+                  "histórico de crédito mais longo = mais estabilidade"),
+    missing_handling = c("NA se dti/income NA ou income 0 -> median impute (train fit)",
+                         "NA se earliest_cr_line NA -> median impute (train fit)"),
+    regression_eligible = c("yes", "no (uses issue_d, a future funding date)"),
+    classification_eligible = c("yes", "yes"))
+  out <- rbind(out, novas)
+  out[, selected_regression := feature %in% FEATURES_REG]
+  out[, selected_classification := feature %in% FEATURES_CLF]
+  out[]
 }
+
+# Conjunto final acordado com o Ramos (10 por tarefa, ordenadas por |Spearman| com int_rate)
+FEATURES_REG <- c("fico_mid", "dti_x_loan_to_income", "loan_to_income",
+                  "inq_per_open_acc", "total_bal_to_limit", "any_delinq_2yrs",
+                  "open_acc_ratio", "log_annual_inc", "emp_length_years",
+                  "emp_length_missing")
+FEATURES_CLF <- c(setdiff(FEATURES_REG, "open_acc_ratio"), "credit_hist_months")
