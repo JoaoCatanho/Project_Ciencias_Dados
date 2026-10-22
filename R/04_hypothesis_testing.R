@@ -61,11 +61,12 @@ data.table(set = c("classification (train+val)", "regression (train+val)",
 
 # ==== Assumption checks (normality) =========================================
 
-norm_tbl <- rbindlist(lapply(c("dti", "fico_range_low", "revol_util", "annual_inc", "int_rate"), function(v) {
+norm_vars <- c("dti", "annual_inc", "fico_range_low", "loan_amnt", "revol_util", "int_rate")
+norm_tbl <- rbindlist(lapply(norm_vars, function(v) {
   x <- cap_sample(eda_reg[[v]], 5000, SEED)
   st <- shapiro.test(x)
-  data.table(variable = v, shapiro_W = unname(st$statistic), shapiro_p = st$p.value,
-             skew = skewness(x))
+  data.table(column = v, shapiro_stat = unname(st$statistic), shapiro_p = st$p.value,
+             skew = skewness(x), n_used = length(x))
 }))
 save_table(norm_tbl, "hypothesis_normality")
 norm_tbl
@@ -171,7 +172,7 @@ h6 <- mw_test(eda_clf[target_class == 2L, revol_util], eda_clf[target_class == 0
 h6[, .(statistic, p_value, effect_size, magnitude = label_cliff(effect_size),
        n_a, n_b, median_a, median_b, ci_median_diff)]
 
-# ==== H7 — Interest rate differs by loan purpose (regression target) ========
+# ==== H7 — Interest rate differs by loan purpose (regression target) ======== tenho que tirar
 
 # * H0: `int_rate` has the same distribution for every purpose.
 # * H1: at least one purpose differs.

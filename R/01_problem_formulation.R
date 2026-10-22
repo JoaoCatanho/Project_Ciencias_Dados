@@ -111,8 +111,7 @@ list(leakage_exact = LEAKAGE_EXACT,
 # ==== Split definition ======================================================
 
 # The cutoffs are written by the Python notebook 01 (`outputs/split_definition.json`); R reads
-# the same file so both languages use the **same** partitions. If the file does not exist yet,
-# it is created here with the same default values.
+# the same file so both languages use the **same** partitions.
 split_file <- "outputs/split_definition.json"
 if (!file.exists(split_file)) {
   dir.create("outputs", showWarnings = FALSE)
