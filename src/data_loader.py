@@ -153,6 +153,9 @@ class LendingClubLoader:
                     .replace({"nan": np.nan}).astype(float)
                 )
 
+        if "dti" in df.columns:
+            df["dti"] = df["dti"].mask((df["dti"] < 0) | df["dti"].eq(999))
+
         # dates: fixed formats (deterministic parsing, not learned)
         if "issue_d" in df.columns:
             df["issue_d"] = pd.to_datetime(df["issue_d"], format="%b-%Y", errors="coerce")
@@ -177,6 +180,10 @@ class LendingClubLoader:
                 .str.replace("%", "", regex=False)
                 .replace({"nan": np.nan})
                 .astype(float)
+            )
+
+            df["Debt-To-Income Ratio"] = df["Debt-To-Income Ratio"].mask(
+                df["Debt-To-Income Ratio"] < 0
             )
 
         # Risk_Score: 0.0 means missing (per the project spec)

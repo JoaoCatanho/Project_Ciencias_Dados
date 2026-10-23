@@ -40,6 +40,12 @@ class LendingClubEDA:
 
     def __init__(self, seed: int = 42) -> None:
         self.seed = seed
+        self._pca = None
+        self._pca_scaler = None
+        self._pca_cols = None
+        self._umap = None
+        self._umap_scaler = None
+        self._umap_cols = None
 
     def reproducible_sample(self, df: pd.DataFrame, n: int, seed: Optional[int] = None) -> pd.DataFrame:
         """Return a reproducible random sample of n rows (never use df.head())."""
@@ -82,7 +88,7 @@ class LendingClubEDA:
         axes = np.atleast_1d(axes).ravel()
         for ax, col in zip(axes, cols):
             data = df[col].dropna()
-            if col in log_scale_cols and (data > 0).all():
+            if col in log_scale_cols and (data >= 0).all():
                 data = np.log1p(data)
                 ax.set_title(f"log1p({col})")
             else:
@@ -155,10 +161,13 @@ class LendingClubEDA:
         seed = self.seed if seed is None else seed
         present = [c for c in cols if c in df.columns]
         sub = self.reproducible_sample(df[present].dropna(), n=sample_n or len(df), seed=seed)
-        X = StandardScaler().fit_transform(sub.values)
+        self._pca_cols = present
+        self._pca_scaler = StandardScaler()
+        X = self._pca_scaler.fit_transform(sub.values)
 
         pca = PCA(n_components=n_components, random_state=seed)
         Z = pca.fit_transform(X)
+        self._pca = pca
 
         # Scree
         out_dir.mkdir(parents=True, exist_ok=True)
@@ -225,7 +234,9 @@ class LendingClubEDA:
         present = [c for c in cols if c in df.columns]
         keep = present + ([hue] if hue and hue in df.columns else [])
         sub = self.reproducible_sample(df[keep].dropna(), n=sample_n, seed=seed)
-        X = StandardScaler().fit_transform(sub[present].values)
+        self._umap_cols = present
+        self._umap_scaler = StandardScaler()
+        X = self._umap_scaler.fit_transform(sub[present].values)
 
         reducer = umap.UMAP(
             n_neighbors=n_neighbors,
@@ -234,6 +245,7 @@ class LendingClubEDA:
             random_state=seed,
         )
         Z = reducer.fit_transform(X)
+        self._umap = reducer
 
         emb = pd.DataFrame(Z, columns=["umap1", "umap2"], index=sub.index)
         if hue and hue in sub.columns:
@@ -260,3 +272,24 @@ class LendingClubEDA:
         iqr = q3 - q1
         lo, hi = q1 - 1.5 * iqr, q3 + 1.5 * iqr
         return int(((s < lo) | (s > hi)).sum())
+
+    def transform_pca(self, df: pd.DataFrame) -> pd.DataFrame:
+        """Project complete validation rows using training-fitted scaling and PCA."""
+        if self._pca is None:
+            raise RuntimeError("Call run_pca on training data first.")
+        sub = df[self._pca_cols].dropna()
+        columns = [f"PC{i+1}" for i in range(self._pca.n_components_)]
+        if sub.empty:
+            return pd.DataFrame(index=sub.index, columns=columns, dtype=float)
+        z = self._pca.transform(self._pca_scaler.transform(sub.values))
+        return pd.DataFrame(z, index=sub.index, columns=columns)
+
+    def transform_umap(self, df: pd.DataFrame) -> pd.DataFrame:
+        """Project complete validation rows without refitting the UMAP or scaler."""
+        if self._umap is None:
+            raise RuntimeError("Call run_umap on training data first.")
+        sub = df[self._umap_cols].dropna()
+        if sub.empty:
+            return pd.DataFrame(index=sub.index, columns=["umap1", "umap2"], dtype=float)
+        z = self._umap.transform(self._umap_scaler.transform(sub.values))
+        return pd.DataFrame(z, index=sub.index, columns=["umap1", "umap2"])

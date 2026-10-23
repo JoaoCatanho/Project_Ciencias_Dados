@@ -45,7 +45,9 @@ LEAKAGE_EXACT = [
 LEAKAGE_PREFIXES = ("hardship_", "settlement_")
 
 # Extra exclusions for the pre-pricing regression task only.
-REGRESSION_EXTRA_BANNED = ["grade", "sub_grade", "installment", "int_rate", "loan_status"]
+REGRESSION_EXTRA_BANNED = ["grade", "sub_grade", "installment", "int_rate", "loan_status",
+    "issue_d", "credit_hist_months", "credit_age_ratio", "verification_status",
+    "verification_status_joint", "funded_amnt", "funded_amnt_inv"]
 
 # Extra exclusions for the classification task.
 CLASSIFICATION_EXTRA_BANNED = ["loan_status"]

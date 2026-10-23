@@ -59,3 +59,13 @@ class ChronologicalSplitter:
                 "test_start": (val_end_ts + pd.offsets.MonthBegin(1)).isoformat(),
             },
         )
+
+    def development(self, df: pd.DataFrame, date_col: str | None = None) -> pd.DataFrame:
+        """Select records through the validation month; exclude missing dates.
+
+        An alternate date column aligns rejected applications with the same
+        development cutoff. No outcome filtering is performed here.
+        """
+        dates = pd.to_datetime(df[date_col or self.date_col], errors="coerce")
+        cutoff = pd.Timestamp(self.val_end).to_period("M")
+        return df.loc[dates.dt.to_period("M") <= cutoff].copy()

@@ -63,9 +63,8 @@ class LendingClubFeatureEngineer:
         Per the specification:
         - For the origination classifier, use `issue_d` (per row).
         - For the pre-pricing regression, use a defensible pre-pricing
-          reference date. We use `issue_d` as an approximation, and we
-          document this as a limitation in the spec table.
-        If None, the per-row `issue_d` is used.
+          reference date. Funding-date history is excluded from regression.
+        If None, per-row `issue_d` is used only for classification/clustering.
 
     Notes
     -----
@@ -99,18 +98,21 @@ class LendingClubFeatureEngineer:
         self._add_credit_hist_months(df, task)
         self._add_revol_util_bucket(df, task)
         self._add_total_credit_lines(df, task)
-        self._add_inq_per_year(df, task)
+        self._add_inquiries_per_open_account(df, task)
         self._add_util_x_fico(df, task)
         self._add_bc_pressure(df, task)
         self._add_delinq_rate(df, task)
         self._add_loan_per_term(df, task)
         self._add_emp_length_years(df, task)
         self._add_pub_rec_bankruptcies_flag(df, task)
-        self._add_credit_age_ratio(df, task)
+        self._add_closed_credit_share(df, task)
         self._add_installment_burden(df, task)      # not for regression
         self._add_rate_burden(df, task)             # not for regression
 
-        return df
+        # Never expose ineligible derived columns as candidate predictors.
+        ineligible = [spec.name for spec in self.specs
+                      if not getattr(spec, f"eligible_{task}")]
+        return df.drop(columns=ineligible, errors="ignore")
 
     def specification_frame(self) -> pd.DataFrame:
         """Return the ≥10-feature specification as a DataFrame."""
@@ -175,11 +177,11 @@ class LendingClubFeatureEngineer:
             formula="(reference_date - earliest_cr_line) in months",
             rationale="Longer credit history is a proxy for financial stability.",
             missing_handling="NaN preserved; imputed inside the training-fold pipeline.",
-            eligible_regression=True,
+            eligible_regression=False,
             eligible_classification=True,
             notes=("reference_date defaults to per-row issue_d (funding month). "
-                   "For the pre-pricing regression task, issue_d is an "
-                   "approximation of the application date — documented limitation."),
+                   "Excluded from pre-pricing regression: no verified application date. "
+                   "Use baseline mo_sin_old_rev_tl_op for that task instead."),
         ))
 
     def _add_revol_util_bucket(self, df: pd.DataFrame, task: str) -> None:
@@ -194,7 +196,7 @@ class LendingClubFeatureEngineer:
         self.specs.append(FeatureSpec(
             name=name,
             source_columns=["revol_util"],
-            formula="discretised revol_util into [<30, 30-60, 60-80, 80-100, >100]",
+            formula="0: [0,30], 1: (30,60], 2: (60,80], 3: (80,100], 4: >100",
             rationale="Utilisation risk is known to be non-linear; binning exposes "
                       "threshold effects without a learned transformation.",
             missing_handling="NaN preserved; imputed inside the training-fold pipeline.",
@@ -220,21 +222,18 @@ class LendingClubFeatureEngineer:
             eligible_classification=True,
         ))
 
-    def _add_inq_per_year(self, df: pd.DataFrame, task: str) -> None:
-        name = "inq_per_year"
-        if "inq_last_6mths" in df.columns:
-            df[name] = df["inq_last_6mths"] * 2
+    def _add_inquiries_per_open_account(self, df: pd.DataFrame, task: str) -> None:
+        name = "inquiries_per_open_account"
+        if {"inq_last_6mths", "open_acc"}.issubset(df.columns):
+            df[name] = df["inq_last_6mths"] / df["open_acc"].replace(0, np.nan)
         else:
             df[name] = np.nan
         self.specs.append(FeatureSpec(
-            name=name,
-            source_columns=["inq_last_6mths"],
-            formula="inq_last_6mths * 2",
-            rationale="Annualised credit-seeking activity; enquiries are a "
-                      "classic precursor of financial stress.",
-            missing_handling="NaN preserved; imputed inside the training-fold pipeline.",
-            eligible_regression=True,
-            eligible_classification=True,
+            name=name, source_columns=["inq_last_6mths", "open_acc"],
+            formula="inq_last_6mths / open_acc; zero denominator -> NaN",
+            rationale="Recent credit-seeking intensity relative to the active credit file.",
+            missing_handling="Missing inputs and zero denominator -> NaN; fold-wise imputation.",
+            eligible_regression=True, eligible_classification=True,
         ))
 
     def _add_util_x_fico(self, df: pd.DataFrame, task: str) -> None:
@@ -264,7 +263,7 @@ class LendingClubFeatureEngineer:
         self.specs.append(FeatureSpec(
             name=name,
             source_columns=["bc_util", "bc_open_to_buy"],
-            formula="bc_util / max(bc_open_to_buy, eps)",
+            formula="bc_util / bc_open_to_buy; zero denominator -> NaN",
             rationale="Bank-card pressure: high utilisation with little "
                       "available headroom is a strong stress indicator.",
             missing_handling="NaN preserved; imputed inside the training-fold pipeline.",
@@ -283,7 +282,7 @@ class LendingClubFeatureEngineer:
         self.specs.append(FeatureSpec(
             name=name,
             source_columns=["delinq_2yrs", "total_acc"],
-            formula="delinq_2yrs / max(total_acc, 1)",
+            formula="delinq_2yrs / total_acc; zero denominator -> NaN",
             rationale="Normalised delinquency: raw counts are unfair to "
                       "borrowers with deep credit files.",
             missing_handling="NaN preserved; imputed inside the training-fold pipeline.",
@@ -312,25 +311,27 @@ class LendingClubFeatureEngineer:
         name = "emp_length_years"
         if "emp_length" in df.columns:
             s = df["emp_length"].astype(str).str.extract(r"(\d+)").astype(float)
-            df[name] = s
+            df[name] = s.iloc[:, 0].mask(df["emp_length"].eq("< 1 year").fillna(False), 0.5)
         else:
             df[name] = np.nan
         self.specs.append(FeatureSpec(
             name=name,
             source_columns=["emp_length"],
-            formula="numeric extraction from emp_length string",
+            formula="<1 year -> 0.5; 1..9 years -> integer; 10+ years -> 10",
             rationale="Employment stability; a well-known underwriting input.",
             missing_handling="NaN preserved; imputed inside the training-fold pipeline.",
             eligible_regression=True,
             eligible_classification=True,
-            notes="'< 1 year' and '10+ years' become NaN by regex; "
-                  "they are recovered by the pipeline imputer.",
+            notes="0.5 is a fixed midpoint convention for <1 year; 10 is the "
+                  "lower bound for 10+ years. Missing strings remain NaN.",
         ))
 
     def _add_pub_rec_bankruptcies_flag(self, df: pd.DataFrame, task: str) -> None:
         name = "has_bankruptcy"
         if "pub_rec_bankruptcies" in df.columns:
-            df[name] = (df["pub_rec_bankruptcies"] > 0).astype("float")
+            df[name] = (df["pub_rec_bankruptcies"] > 0).astype("float").where(
+                df["pub_rec_bankruptcies"].notna()
+            )
         else:
             df[name] = np.nan
         self.specs.append(FeatureSpec(
@@ -344,28 +345,19 @@ class LendingClubFeatureEngineer:
             eligible_classification=True,
         ))
 
-    def _add_credit_age_ratio(self, df: pd.DataFrame, task: str) -> None:
-        name = "credit_age_ratio"
-        if {"credit_hist_months", "age_placeholder"} <= set(df.columns):
-            pass
-        # We don't have an applicant age column in the accepted file.
-        # Use the ratio of credit_hist_months to a stable population-scale
-        # constant (18 years = 216 months) to keep units interpretable.
-        if "credit_hist_months" in df.columns:
-            df[name] = df["credit_hist_months"] / 216.0
+    def _add_closed_credit_share(self, df: pd.DataFrame, task: str) -> None:
+        name = "closed_credit_share"
+        if {"total_acc", "open_acc"}.issubset(df.columns):
+            valid = (df["total_acc"] > 0) & (df["open_acc"] >= 0) & (df["open_acc"] <= df["total_acc"])
+            df[name] = ((df["total_acc"] - df["open_acc"]) / df["total_acc"].replace(0, np.nan)).where(valid)
         else:
             df[name] = np.nan
         self.specs.append(FeatureSpec(
-            name=name,
-            source_columns=["credit_hist_months"],
-            formula="credit_hist_months / 216",
-            rationale="Credit history expressed as a fraction of an adult "
-                      "borrower's default working life; easier to compare "
-                      "across cohorts.",
-            missing_handling="NaN preserved; imputed inside the training-fold pipeline.",
-            eligible_regression=True,
-            eligible_classification=True,
-            notes="Deterministic scale constant (18 years = 216 months).",
+            name=name, source_columns=["total_acc", "open_acc"],
+            formula="(total_acc - open_acc) / total_acc; invalid counts or total_acc <= 0 -> NaN",
+            rationale="Share of the historical credit file no longer open; captures account turnover.",
+            missing_handling="Missing or inconsistent counts -> NaN; fold-wise imputation.",
+            eligible_regression=True, eligible_classification=True,
         ))
 
     def _add_installment_burden(self, df: pd.DataFrame, task: str) -> None:
@@ -384,6 +376,7 @@ class LendingClubFeatureEngineer:
             missing_handling="NaN preserved; imputed inside the training-fold pipeline.",
             eligible_regression=False,
             eligible_classification=True,
+            eligible_clustering=False,
             notes=("Excluded from regression because installment is derived from "
                    "loan_amnt, term, and int_rate and is banned for that task."),
         ))
@@ -404,6 +397,7 @@ class LendingClubFeatureEngineer:
             missing_handling="NaN preserved; imputed inside the training-fold pipeline.",
             eligible_regression=False,
             eligible_classification=True,
+            eligible_clustering=False,
             notes=("Excluded from regression because int_rate is the target for "
                    "that task; it is allowed for the origination classifier "
                    "because the priced rate is fixed at origination."),
