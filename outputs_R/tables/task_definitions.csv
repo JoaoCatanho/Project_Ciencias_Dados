@@ -1,0 +1,4 @@
+task,goal,target,population,prediction_time
+Regression,Estimate the interest rate a new applicant would likely be offered,int_rate (%),All funded loans with a valid int_rate,"Application, BEFORE pricing (no grade/sub_grade/installment)"
+Classification,Predict the repayment outcome of a funded loan (3 classes),"Good (Fully Paid) / At risk (Late 16-30, Late 31-120, In Grace) / Default (Charged Off, Default)",Funded loans whose status maps to one of the 3 classes; 'Current' excluded (outcome unknown),"Origination, AFTER pricing (int_rate, grade, installment allowed)"
+Clustering,Find interpretable groups of borrowers / states,none (unsupervised),Borrowers: funded loans (train period); States: accepted + rejected aggregates,n/a (descriptive)

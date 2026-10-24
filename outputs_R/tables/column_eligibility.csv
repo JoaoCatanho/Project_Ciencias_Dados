@@ -1,0 +1,76 @@
+column,regression,classification,reason
+loan_amnt,input,input,"requested loan characteristics, known at application"
+term,input,input,"requested loan characteristics, known at application"
+purpose,input,input,"requested loan characteristics, known at application"
+emp_length,input,input,"application / credit-bureau history at application (prior credit, not this loan's outcome)"
+home_ownership,input,input,"application / credit-bureau history at application (prior credit, not this loan's outcome)"
+annual_inc,input,input,"application / credit-bureau history at application (prior credit, not this loan's outcome)"
+dti,input,input,"application / credit-bureau history at application (prior credit, not this loan's outcome)"
+fico_range_low,input,input,"application / credit-bureau history at application (prior credit, not this loan's outcome)"
+fico_range_high,input,input,"application / credit-bureau history at application (prior credit, not this loan's outcome)"
+delinq_2yrs,input,input,"application / credit-bureau history at application (prior credit, not this loan's outcome)"
+inq_last_6mths,input,input,"application / credit-bureau history at application (prior credit, not this loan's outcome)"
+open_acc,input,input,"application / credit-bureau history at application (prior credit, not this loan's outcome)"
+total_acc,input,input,"application / credit-bureau history at application (prior credit, not this loan's outcome)"
+pub_rec,input,input,"application / credit-bureau history at application (prior credit, not this loan's outcome)"
+pub_rec_bankruptcies,input,input,"application / credit-bureau history at application (prior credit, not this loan's outcome)"
+revol_bal,input,input,"application / credit-bureau history at application (prior credit, not this loan's outcome)"
+revol_util,input,input,"application / credit-bureau history at application (prior credit, not this loan's outcome)"
+mort_acc,input,input,"application / credit-bureau history at application (prior credit, not this loan's outcome)"
+tot_cur_bal,input,input,"application / credit-bureau history at application (prior credit, not this loan's outcome)"
+tot_hi_cred_lim,input,input,"application / credit-bureau history at application (prior credit, not this loan's outcome)"
+bc_util,input,input,"application / credit-bureau history at application (prior credit, not this loan's outcome)"
+bc_open_to_buy,input,input,"application / credit-bureau history at application (prior credit, not this loan's outcome)"
+mo_sin_old_rev_tl_op,input,input,"application / credit-bureau history at application (prior credit, not this loan's outcome)"
+num_actv_rev_tl,input,input,"application / credit-bureau history at application (prior credit, not this loan's outcome)"
+pct_tl_nvr_dlq,input,input,"application / credit-bureau history at application (prior credit, not this loan's outcome)"
+tax_liens,input,input,"application / credit-bureau history at application (prior credit, not this loan's outcome)"
+collections_12_mths_ex_med,input,input,"application / credit-bureau history at application (prior credit, not this loan's outcome)"
+chargeoff_within_12_mths,input,input,"application / credit-bureau history at application (prior credit, not this loan's outcome)"
+acc_now_delinq,input,input,"application / credit-bureau history at application (prior credit, not this loan's outcome)"
+tot_coll_amt,input,input,"application / credit-bureau history at application (prior credit, not this loan's outcome)"
+earliest_cr_line,input (via mo_sin_old_rev_tl_op),input (age relative to issue_d),credit-history age must not use a future funding date for the pre-pricing task
+application_type,input,input,joint fields are not leakage; NA = not applicable for individual apps (no zero-filling)
+annual_inc_joint,input,input,joint fields are not leakage; NA = not applicable for individual apps (no zero-filling)
+dti_joint,input,input,joint fields are not leakage; NA = not applicable for individual apps (no zero-filling)
+addr_state,input (fairness-sensitive),input (fairness-sensitive),geography may proxy protected attributes; analysed separately for fairness
+zip_code,input (fairness-sensitive),input (fairness-sensitive),geography may proxy protected attributes; analysed separately for fairness
+verification_status,EXCLUDE,input,"verification result exists at origination, not before pricing"
+verification_status_joint,EXCLUDE,input,"verification result exists at origination, not before pricing"
+int_rate,EXCLUDE (target / rate-determining),input,fixed by pricing; installment reverse-engineers int_rate
+grade,EXCLUDE (target / rate-determining),input,fixed by pricing; installment reverse-engineers int_rate
+sub_grade,EXCLUDE (target / rate-determining),input,fixed by pricing; installment reverse-engineers int_rate
+installment,EXCLUDE (target / rate-determining),input,fixed by pricing; installment reverse-engineers int_rate
+funded_amnt,EXCLUDE,EXCLUDE,funding outcome; availability at origination not defensible
+funded_amnt_inv,EXCLUDE,EXCLUDE,funding outcome; availability at origination not defensible
+initial_list_status,EXCLUDE,EXCLUDE,conditional process information; availability uncertain
+disbursement_method,EXCLUDE,EXCLUDE,conditional process information; availability uncertain
+issue_d,split only,split + input (issue_year),"funding month, not application date"
+loan_status,EXCLUDE,TARGET,defines the class label
+out_prncp,EXCLUDE,EXCLUDE,post-origination performance (leakage)
+out_prncp_inv,EXCLUDE,EXCLUDE,post-origination performance (leakage)
+total_pymnt,EXCLUDE,EXCLUDE,post-origination performance (leakage)
+total_pymnt_inv,EXCLUDE,EXCLUDE,post-origination performance (leakage)
+total_rec_prncp,EXCLUDE,EXCLUDE,post-origination performance (leakage)
+total_rec_int,EXCLUDE,EXCLUDE,post-origination performance (leakage)
+total_rec_late_fee,EXCLUDE,EXCLUDE,post-origination performance (leakage)
+recoveries,EXCLUDE,EXCLUDE,post-origination performance (leakage)
+collection_recovery_fee,EXCLUDE,EXCLUDE,post-origination performance (leakage)
+last_pymnt_d,EXCLUDE,EXCLUDE,post-origination performance (leakage)
+last_pymnt_amnt,EXCLUDE,EXCLUDE,post-origination performance (leakage)
+next_pymnt_d,EXCLUDE,EXCLUDE,post-origination performance (leakage)
+last_credit_pull_d,EXCLUDE,EXCLUDE,post-origination performance (leakage)
+last_fico_range_high,EXCLUDE,EXCLUDE,post-origination performance (leakage)
+last_fico_range_low,EXCLUDE,EXCLUDE,post-origination performance (leakage)
+debt_settlement_flag,EXCLUDE,EXCLUDE,post-origination performance (leakage)
+debt_settlement_flag_date,EXCLUDE,EXCLUDE,post-origination performance (leakage)
+hardship_*,EXCLUDE,EXCLUDE,post-origination field groups (leakage)
+settlement_*,EXCLUDE,EXCLUDE,post-origination field groups (leakage)
+id,EXCLUDE,EXCLUDE,identifier / administrative / free text
+member_id,EXCLUDE,EXCLUDE,identifier / administrative / free text
+url,EXCLUDE,EXCLUDE,identifier / administrative / free text
+desc,EXCLUDE,EXCLUDE,identifier / administrative / free text
+policy_code,EXCLUDE,EXCLUDE,identifier / administrative / free text
+pymnt_plan,EXCLUDE,EXCLUDE,identifier / administrative / free text
+emp_title,EXCLUDE,EXCLUDE,identifier / administrative / free text
+title,EXCLUDE,EXCLUDE,identifier / administrative / free text

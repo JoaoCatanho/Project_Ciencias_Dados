@@ -1,0 +1,20 @@
+feature,source_columns,formula,rationale,missing_handling,regression_eligible,classification_eligible,selected_regression,selected_classification
+fico_mid,"fico_range_low, fico_range_high",(low + high) / 2,single score instead of two collinear bounds,NA if any bound NA -> median impute (train fit),yes,yes,TRUE,TRUE
+log_annual_inc,annual_inc,log(1 + annual_inc),reduces right skew; income effect is multiplicative,NA if income NA -> median impute (train fit),yes,yes,TRUE,TRUE
+loan_to_income,"loan_amnt, annual_inc",loan_amnt / annual_inc,affordability of the requested loan,NA if income 0/NA -> median impute (train fit),yes,yes,TRUE,TRUE
+revol_bal_to_income,"revol_bal, annual_inc",revol_bal / annual_inc,revolving leverage independent of income scale,NA if income 0/NA -> median impute (train fit),yes,yes,FALSE,FALSE
+emp_length_years,emp_length,"'< 1 year'->0, '10+ years'->10, 'k years'->k",employment stability as a number,"NA kept, flagged by F6 -> median impute (train fit)",yes,yes,TRUE,TRUE
+emp_length_missing,emp_length,1 if emp_length unparseable/missing,missing employment may be informative (self-employed etc.),never missing,yes,yes,TRUE,TRUE
+open_acc_ratio,"open_acc, total_acc",open_acc / total_acc,how much of the credit history is still active,NA if total_acc 0/NA -> median impute (train fit),yes,yes,TRUE,FALSE
+any_delinq_2yrs,delinq_2yrs,1 if delinq_2yrs > 0,recent repayment problems,NA if delinq_2yrs NA -> mode impute (train fit),yes,yes,TRUE,TRUE
+any_derog,"pub_rec, pub_rec_bankruptcies, tax_liens",1 if any of the three > 0,"serious past credit events, rare individually",NA only if pub_rec NA -> mode impute (train fit),yes,yes,FALSE,FALSE
+total_bal_to_limit,"tot_cur_bal, tot_hi_cred_lim",tot_cur_bal / tot_hi_cred_lim,overall utilisation of available credit,NA before ~2012 (bureau field not collected) -> median impute + missing indicator,yes,yes,TRUE,TRUE
+is_joint,application_type,1 if application_type == 'Joint App',joint apps use different income/DTI fields,never missing,yes,yes,FALSE,FALSE
+dti_effective,"dti, dti_joint, application_type","dti_joint if joint, else dti",uses the DTI relevant to the application; avoids zero-filling joint fields,NA only if dti NA -> median impute (train fit),yes,yes,FALSE,FALSE
+term_60,term,1 if term == 60,longer term = higher risk and higher rate,never missing,yes,yes,FALSE,FALSE
+inq_per_open_acc,"inq_last_6mths, open_acc",inq_last_6mths / open_acc,recent credit-seeking relative to active accounts,NA if open_acc 0/NA -> median impute (train fit),yes,yes,TRUE,TRUE
+credit_hist_years_at_issue,"earliest_cr_line, issue_d",months(issue_d - earliest_cr_line) / 12,credit age at origination (spec: relative to issue_d),NA if earliest_cr_line NA -> median impute (train fit),"no (uses issue_d, a future funding date)",yes,FALSE,FALSE
+payment_to_income,"installment, annual_inc",12 * installment / annual_inc,real repayment burden at origination,NA if income 0/NA -> median impute (train fit),no (installment encodes int_rate),yes,FALSE,FALSE
+issue_year,issue_d,year(issue_d),captures policy/macro drift across vintages,never missing,no (issue_d is not a pre-pricing input),yes,FALSE,FALSE
+dti_x_loan_to_income,"dti, loan_amnt, annual_inc",dti * loan_amnt / annual_inc,dívida existente x peso do novo empréstimo (alavancagem composta),NA se dti/income NA ou income 0 -> median impute (train fit),yes,yes,TRUE,TRUE
+credit_hist_months,"earliest_cr_line, issue_d",(issue_d - earliest_cr_line) em dias / 30.44,histórico de crédito mais longo = mais estabilidade,NA se earliest_cr_line NA -> median impute (train fit),"no (uses issue_d, a future funding date)",yes,FALSE,TRUE

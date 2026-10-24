@@ -1,0 +1,6 @@
+insight,value
+most heavy-tailed inputs (skew),"annual_inc, revol_bal, pub_rec"
+strongest Spearman correlates of int_rate,"fico_range_low (-0.41), fico_range_high (-0.41), term (0.40)"
+PCs needed for 80% of variance,10
+minority class share (At risk),0.89%
+vintages where bureau fields are mostly missing,"2007, 2008, 2009, 2010, 2011, 2012"

@@ -1,0 +1,7 @@
+dropped_column,reason
+debt_settlement_flag,post-origination leakage
+hardship_flag,post-origination leakage
+last_fico_range_low,post-origination leakage
+last_pymnt_amnt,post-origination leakage
+recoveries,post-origination leakage
+total_pymnt,post-origination leakage

@@ -1,0 +1,8 @@
+test_id,test,statistic,p_value,effect_name,effect_size,n_a,n_b,p_holm,decision
+H1 DTI: Default vs Good,Mann-Whitney U,23225028983.5,0,Cliff's delta,0.161251449175,200000,200000,0,reject H0
+H2 purpose x class,Chi-square,3337.16767313421,0,Cramer's V,0.0384300307851398,1129813,,0,reject H0
+H3 score: Rejected vs Accepted,Mann-Whitney U,7586617183.5,0,Cliff's delta,-0.620669140825,200000,200000,0,reject H0
+H4 amount: Accepted vs Rejected,Mann-Whitney U,24034142998,0,Cliff's delta,0.2017071499,200000,200000,0,reject H0
+H5 FICO: Default vs Good,Mann-Whitney U,16273231994,0,Cliff's delta,-0.1863384003,200000,200000,0,reject H0
+H6 revol_util: Default vs Good,Mann-Whitney U,21519872223.5,0,Cliff's delta,0.0759936111749999,200000,200000,0,reject H0
+H7 int_rate by purpose,Kruskal-Wallis,8659.64073185287,0,epsilon squared,0.043236230195378,200000,,0,reject H0
