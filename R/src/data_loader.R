@@ -1,16 +1,5 @@
 library(data.table)
-# =============================================================================
-# R/src/data_loader.R
-# -----------------------------------------------------------------------------
-# Loading and DETERMINISTIC parsing of the accepted / rejected CSV files.
-# Mirrors src/data_loader.py. No data-dependent transformation happens here
-# (no imputation, no scaling): only fixed-format parsing.
-# =============================================================================
 
-# Columns read from the accepted file. We do NOT read all 151 columns:
-# the excluded ones are either post-origination leakage that is never used,
-# administrative noise, or free text. Reading a fixed list keeps memory low
-# (~1 GB instead of ~6 GB) and makes the analysis reproducible.
 ACCEPTED_COLS <- c(
   # identifiers / dates
   "id", "issue_d",
@@ -36,17 +25,12 @@ ACCEPTED_COLS <- c(
   "hardship_flag", "debt_settlement_flag"
 )
 
-# -----------------------------------------------------------------------------
-# Deterministic parsing helpers
-# -----------------------------------------------------------------------------
-
 #Transforms the percentage strings into numeric values
 parse_percent <- function(x) {
   if (is.numeric(x)) return(x)
   suppressWarnings(as.numeric(gsub("%", "", trimws(x), fixed = TRUE)))
 }
 
-# 
 #' "Dec-2015" -> Date 2015-12-01 (fixed format "%b-%Y", English month names).
 parse_month_year <- function(x) {
   old <- Sys.getlocale("LC_TIME")
@@ -60,15 +44,9 @@ parse_term <- function(x) {
   suppressWarnings(as.numeric(gsub("\\D", "", x))) #retira todo o que não seja numeros
 }
 
-# 3. Loading
+# Loading
 # -----------------------------------------------------------------------------
 
-#' Load and deterministically parse the accepted-loans file.
-#'
-#' * reads only ACCEPTED_COLS (those that exist in the file)
-#' * removes the summary/footer rows at the end of the Kaggle CSV
-#'   (they have an `id` like "Total amount funded..." and no loan data)
-#' * parses term, percentages and dates with FIXED formats
 load_accepted <- function(path, cols = ACCEPTED_COLS) {
   header <- names(fread(path, nrows = 0))
   use    <- intersect(cols, header) # escoplhe apenas as colunas escolhidas
@@ -88,12 +66,7 @@ load_accepted <- function(path, cols = ACCEPTED_COLS) {
   dt[]
 }
 
-#' Load and deterministically parse the rejected-applications file.
-#'
-#' Spec notes applied here:
-#'  * Risk_Score == 0 is MISSING, not a real low score
-#'  * Debt-To-Income Ratio is a text percentage ("10%") -> numeric
-#' Columns are renamed to snake_case for convenience.
+# Load Rejected.csv
 load_rejected <- function(path) {
   dt <- fread(path, na.strings = c("", "NA"),
               select = c("Amount Requested", "Application Date",

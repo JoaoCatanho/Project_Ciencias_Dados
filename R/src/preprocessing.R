@@ -33,29 +33,20 @@ STATUS_AT_RISK <- c("Late (16-30 days)", "Late (31-120 days)", "In Grace Period"
 STATUS_DEFAULT <- c("Charged Off", "Default")
 CLASS_LABELS   <- c("0" = "Good", "1" = "At risk", "2" = "Default")
 
-#' Return every leakage column present in `cols` (exact + prefix matches).
-leakage_columns <- function(cols) {
+# Return every leakage column present in "cols" (exact + prefix matches).
+leakage_columns <- function(cols) { # apanha os nomes, junta tira os repetidos e ordena
   exact  <- intersect(LEAKAGE_EXACT, cols)
   prefix <- grep(paste(LEAKAGE_PREFIXES, collapse = "|"), cols, value = TRUE)
   sort(unique(c(exact, prefix)))
 }
 
-
-
-#' loan_status -> integer class {0 Good, 1 At risk, 2 Default}; NA otherwise
-#' ("Current" and the "Does not meet the credit policy" statuses -> NA).
-derive_target <- function(status) {
+derive_target <- function(status) { # verifica se é NA, e depois poe o, 1 ,2 conforme o status do emprestimo
   out <- rep(NA_integer_, length(status))
   out[status %in% STATUS_GOOD]    <- 0L
   out[status %in% STATUS_AT_RISK] <- 1L
   out[status %in% STATUS_DEFAULT] <- 2L
   out
 }
-
-# -----------------------------------------------------------------------------
-# Fixed cleaning rules (thresholds set by domain knowledge, NOT learned from
-# data, so they can be applied before the split)
-# -----------------------------------------------------------------------------
 
 #' Accepted file: dti < 0 or >= 999 are sentinel / invalid values -> NA.
 clean_accepted <- function(acc) {
