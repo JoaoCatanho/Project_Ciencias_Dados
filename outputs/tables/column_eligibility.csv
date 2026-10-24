@@ -1,0 +1,22 @@
+column,task,decision,reason
+loan_amnt,regression,input,fixed at application
+term,regression,input,fixed at application
+purpose,regression,input,fixed at application
+annual_inc,regression,input,application data
+dti,regression,input,application data
+fico_range_low,regression,input,credit bureau at application
+grade,regression,EXCLUDE,rate-determining
+sub_grade,regression,EXCLUDE,rate-determining
+installment,regression,EXCLUDE,derived from loan_amnt/term/int_rate
+issue_d / credit_hist_months,regression,EXCLUDE,funding date is not available before pricing
+verification_status,regression,EXCLUDE,verification completion before pricing is not established
+funded_amnt / funded_amnt_inv,regression,EXCLUDE,funding occurs after pricing
+loan_amnt,classification,input,origination snapshot
+term,classification,input,origination snapshot
+installment,classification,input,fixed at origination
+issue_d,classification,split-only,used for chronological split
+total_pymnt,both,EXCLUDE,post-origination
+recoveries,both,EXCLUDE,post-origination
+last_fico_range_low,both,EXCLUDE,post-origination
+hardship_flag,both,EXCLUDE,post-origination prefix
+settlement_status,both,EXCLUDE,post-origination prefix

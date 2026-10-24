@@ -1,0 +1,16 @@
+feature,max_self_collinearity,partner
+loan_to_income,0.9581392143757925,installment_burden
+installment_burden,0.9581392143757925,loan_to_income
+revol_util_bucket,0.9516033589777109,util_x_fico
+util_x_fico,0.9516033589777109,revol_util_bucket
+dti_x_loan_to_income,0.8112118619699975,loan_to_income
+loan_per_term,0.7541238344426923,rate_burden
+rate_burden,0.7541238344426923,loan_per_term
+bc_pressure,0.6538626261098583,util_x_fico
+credit_hist_months,0.3259619391245641,total_credit_lines
+total_credit_lines,0.3259619391245641,credit_hist_months
+closed_credit_share,0.3042373434172013,credit_hist_months
+emp_length_years,0.2738689962247609,credit_hist_months
+has_bankruptcy,0.11782652141069556,loan_per_term
+delinq_rate,0.11390572705791044,credit_hist_months
+inquiries_per_open_account,0.08775935669703505,dti_x_loan_to_income

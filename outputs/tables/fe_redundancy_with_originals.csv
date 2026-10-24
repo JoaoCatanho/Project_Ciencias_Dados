@@ -1,0 +1,16 @@
+engineered,max_abs_corr_with_original,partner_original,near_redundant
+has_bankruptcy,0.9997654033978449,pub_rec_bankruptcies,True
+util_x_fico,0.9965912411121495,revol_util,True
+delinq_rate,0.9964215572713148,delinq_2yrs,True
+loan_per_term,0.9762619921047384,installment,True
+total_credit_lines,0.9732322994581877,total_acc,True
+inquiries_per_open_account,0.9648789705692431,inq_last_6mths,True
+bc_pressure,0.95970827000677,bc_open_to_buy,True
+revol_util_bucket,0.9548707739621558,revol_util,True
+credit_hist_months,0.8995839408109936,mo_sin_old_rev_tl_op,False
+rate_burden,0.895371364899017,loan_amnt,False
+dti_x_loan_to_income,0.7411318425515039,dti,False
+loan_to_income,0.6159573377027153,loan_amnt,False
+installment_burden,0.5755647060864069,installment,False
+closed_credit_share,0.49502190664836637,total_acc,False
+emp_length_years,0.24761748604698305,mo_sin_old_rev_tl_op,False

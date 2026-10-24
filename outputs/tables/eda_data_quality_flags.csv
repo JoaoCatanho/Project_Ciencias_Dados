@@ -1,0 +1,6 @@
+flag,count
+dti == -1 (sentinel),0
+dti == 999 (sentinel),0
+annual_inc == 0,59
+revol_util > 100,5090
+int_rate == max value,133

@@ -1,0 +1,16 @@
+,missing,missing_pct
+bc_pressure,78364,6.936
+emp_length_years,62112,5.498
+has_bankruptcy,697,0.062
+revol_util_bucket,637,0.056
+util_x_fico,637,0.056
+dti_x_loan_to_income,48,0.004
+loan_to_income,35,0.003
+installment_burden,35,0.003
+inquiries_per_open_account,8,0.001
+credit_hist_months,0,0.0
+total_credit_lines,0,0.0
+delinq_rate,0,0.0
+loan_per_term,0,0.0
+closed_credit_share,1,0.0
+rate_burden,0,0.0

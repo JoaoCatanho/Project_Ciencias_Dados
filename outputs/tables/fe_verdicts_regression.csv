@@ -1,0 +1,13 @@
+name,kind,target_signal,max_redundancy,max_redundancy_with,max_self_collinearity,max_self_collinearity_with,verdict
+revol_util_bucket,engineered,0.30608471671000903,0.9549920289721382,revol_util,0.9549920289721382,revol_util,near-redundant — drop or keep only one
+util_x_fico,engineered,0.291879021166073,0.9965691145344829,revol_util,0.9965691145344829,revol_util,near-redundant — drop or keep only one
+dti_x_loan_to_income,engineered,0.23597462242963194,0.7430044568651278,dti,0.8120340087356953,loan_to_income,keep — non-redundant with reasonable signal
+loan_to_income,engineered,0.21819203256562683,0.6146393386555741,loan_amnt,0.8120340087356953,dti_x_loan_to_income,keep — non-redundant with reasonable signal
+inquiries_per_open_account,engineered,0.16254542188565926,0.9655346753694619,inq_last_6mths,0.9655346753694619,inq_last_6mths,near-redundant — drop or keep only one
+delinq_rate,engineered,0.08379835076400131,0.9963855321289407,delinq_2yrs,0.9963855321289407,delinq_2yrs,near-redundant — drop or keep only one
+closed_credit_share,engineered,0.08119668472560045,0.4932847420914384,total_acc,0.4932847420914384,total_acc,keep — non-redundant with reasonable signal
+has_bankruptcy,engineered,0.05853596910080364,0.9997704330261086,pub_rec_bankruptcies,0.9997704330261086,pub_rec_bankruptcies,near-redundant — drop or keep only one
+bc_pressure,engineered,0.05668180808968406,0.9600385432704277,bc_open_to_buy,0.9600385432704277,bc_open_to_buy,near-redundant — drop or keep only one
+loan_per_term,engineered,0.04242679216416729,0.9173324743294337,loan_amnt,0.9173324743294337,loan_amnt,keep — non-redundant with reasonable signal
+emp_length_years,engineered,0.030402064519875035,0.2467723478600764,mo_sin_old_rev_tl_op,0.2467723478600764,mo_sin_old_rev_tl_op,keep — non-redundant with reasonable signal
+total_credit_lines,engineered,0.020845402992944854,0.9732686504924967,total_acc,0.9732686504924967,total_acc,near-redundant — drop or keep only one

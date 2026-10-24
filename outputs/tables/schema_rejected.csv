@@ -1,0 +1,10 @@
+,dtype,missing,missing_pct,n_unique
+Risk_Score,float64,18584384,67.216,691
+Debt-To-Income Ratio,float64,1203063,4.3512,126144
+Employment Length,str,951355,3.4409,11
+Loan Title,str,1305,0.0047,73927
+Policy Code,float64,918,0.0033,2
+Zip Code,str,293,0.0011,1001
+State,str,22,0.0001,51
+Amount Requested,float64,0,0.0,3640
+Application Date,datetime64[us],0,0.0,4238

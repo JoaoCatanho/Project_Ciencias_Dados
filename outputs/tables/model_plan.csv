@@ -1,0 +1,17 @@
+task,model,role,notes
+regression,kNN (scratch),required baseline,non-parametric; scale-sensitive
+regression,Ridge,linear baseline,L2 for multicollinearity
+regression,DecisionTreeRegressor,non-linear baseline,depth via CV
+regression,RandomForestRegressor,bagging ensemble (required),500 trees
+regression,GradientBoostingRegressor,boosting ensemble (required),500 estimators
+regression,MLP (PyTorch/TensorFlow),deep learning (required),"128-64 ReLU, dropout 0.2"
+classification,kNN (scratch),required baseline,non-parametric; scale-sensitive
+classification,LogisticRegression,linear baseline,multinomial; class_weight=balanced
+classification,DecisionTreeClassifier,non-linear baseline,depth via CV; class_weight
+classification,RandomForestClassifier,bagging ensemble (required),500 trees; class_weight
+classification,GradientBoostingClassifier,boosting ensemble (required),500 estimators
+classification,MLP (PyTorch/TensorFlow),deep learning (required),128-64 ReLU; weighted CE
+clustering,KMeans,baseline partitional,k via silhouette
+clustering,AgglomerativeClustering,hierarchical,Ward linkage
+clustering,DBSCAN,density-based (optional),eps via k-distance
+clustering,GaussianMixture,soft assignments (optional),BIC for component count
