@@ -8,6 +8,6 @@ scripts <- c("01_problem_formulation", "02_data_cleaning", "03_eda",
              "04_hypothesis_testing", "05_feature_engineering_model_plan")
 for (s in scripts) {
   message("\n========== Running ", s, " ==========")
-  source(file.path("R", paste0(s, ".R")), print.eval = TRUE, local = new.env())
+  source(file.path("R", paste0(s, ".R")), print.eval = FALSE, local = new.env()) #criando um novo ambiente para as variveis que la se encontram
 }
 message("\nDone. Tables in outputs/R/tables/, figures in outputs/R/figures/.")
