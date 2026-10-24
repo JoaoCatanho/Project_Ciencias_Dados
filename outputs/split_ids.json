@@ -1,0 +1,22 @@
+{
+  "regression": {
+    "cutoffs": {
+      "train_end": "2014-12-31T00:00:00",
+      "val_end": "2016-12-31T00:00:00",
+      "test_start": "2017-01-01T00:00:00"
+    },
+    "n_train": 466345,
+    "n_val": 855502,
+    "n_test": 938821
+  },
+  "classification": {
+    "cutoffs": {
+      "train_end": "2014-12-31T00:00:00",
+      "val_end": "2016-12-31T00:00:00",
+      "test_start": "2017-01-01T00:00:00"
+    },
+    "n_train": 451671,
+    "n_val": 678142,
+    "n_test": 249789
+  }
+}
