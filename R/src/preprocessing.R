@@ -7,6 +7,7 @@
 
 # Post-origination leakage (spec, "Note on data leakage").
 # NB: the real Kaggle column is `last_pymnt_amnt` (with an "n").
+# As colunas que dão leakage
 LEAKAGE_EXACT <- c(
   "out_prncp", "out_prncp_inv", "total_pymnt", "total_pymnt_inv",
   "total_rec_prncp", "total_rec_int", "total_rec_late_fee", "recoveries",

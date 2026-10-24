@@ -1,3 +1,4 @@
+library(data.table)
 # =============================================================================
 # R/src/data_loader.R
 # -----------------------------------------------------------------------------
@@ -69,9 +70,9 @@ parse_term <- function(x) {
 #'   (they have an `id` like "Total amount funded..." and no loan data)
 #' * parses term, percentages and dates with FIXED formats
 load_accepted <- function(path, cols = ACCEPTED_COLS) {
-  header <- names(data.table::fread(path, nrows = 0))
+  header <- names(fread(path, nrows = 0))
   use    <- intersect(cols, header) # escoplhe apenas as colunas escolhidas
-  dt <- data.table::fread(path, select = use, na.strings = c("", "NA"),
+  dt <- fread(path, select = use, na.strings = c("", "NA"),
               colClasses = list(character = c("id", "zip_code")), # estas colunas não podem ser lidas como numeros, por isso passam para strings
               showProgress = FALSE)
   n_raw <- nrow(dt)
@@ -94,12 +95,12 @@ load_accepted <- function(path, cols = ACCEPTED_COLS) {
 #'  * Debt-To-Income Ratio is a text percentage ("10%") -> numeric
 #' Columns are renamed to snake_case for convenience.
 load_rejected <- function(path) {
-  dt <- data.table::fread(path, na.strings = c("", "NA"),
+  dt <- fread(path, na.strings = c("", "NA"),
               select = c("Amount Requested", "Application Date",
                          "Risk_Score", "Debt-To-Income Ratio",
                          "State", "Employment Length"),
               showProgress = FALSE)
-  data.table::setnames(dt,
+  setnames(dt,
            c("Amount Requested", "Application Date", "Risk_Score",
              "Debt-To-Income Ratio", "State", "Employment Length"),
            c("amount_requested", "application_date", "risk_score",
@@ -108,6 +109,6 @@ load_rejected <- function(path) {
   dt[, dti := parse_percent(dti)]
   n_zero <- dt[risk_score == 0, .N]
   dt[risk_score == 0, risk_score := NA_real_]
-  data.table::setattr(dt, "n_risk_score_zero", n_zero) # no lintr
+  setattr(dt, "n_risk_score_zero", n_zero)
   dt[]
 }

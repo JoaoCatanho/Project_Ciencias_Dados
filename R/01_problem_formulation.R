@@ -13,7 +13,7 @@ if (!file.exists("R/src/load_all.R")) {
 
 # ---- Parameters ------------------------------------------------------------
 params <- list(
-  observation_cutoff = "2018-12"
+  observation_cutoff = "2018-12" 
 )
 
 source("R/src/load_all.R")
