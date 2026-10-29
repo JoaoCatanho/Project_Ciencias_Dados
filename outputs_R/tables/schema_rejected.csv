@@ -1,0 +1,7 @@
+column,type,missing_pct
+amount_requested,numeric,0
+application_date,Date,0
+risk_score,numeric,67.22
+dti,numeric,0
+state,character,0
+emp_length,character,3.44

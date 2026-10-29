@@ -1,0 +1,5 @@
+check,count
+exact duplicate rows (accepted),0
+duplicate id (accepted),0
+"same (loan_amnt, issue_d, annual_inc, zip_code, earliest_cr_line)",270
+exact duplicate rows (rejected),1339274

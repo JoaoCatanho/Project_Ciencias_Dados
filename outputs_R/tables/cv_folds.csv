@@ -1,0 +1,5 @@
+fold,fit_on,assess_on,n_fit_reg,n_assess_reg,n_fit_clf_matured
+F1,issue year <= 2010,issue year == 2011,20814,21721,422
+F2,issue year <= 2011,issue year == 2012,42535,53367,1813
+F3,issue year <= 2012,issue year == 2013,95902,134814,7118
+F4,issue year <= 2013,issue year == 2014,230716,235629,15944

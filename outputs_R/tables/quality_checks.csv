@@ -1,0 +1,11 @@
+check,count
+accepted: dti < 0 or >= 999 (sentinel values),137
+accepted: annual_inc == 0,1667
+accepted: revol_util > 100,7343
+accepted: fico_range_high < fico_range_low,0
+accepted: earliest_cr_line after issue_d,0
+rejected: Risk_Score == 0 (set to NA by the loader),86754
+rejected: risk_score missing (after 0 -> NA),17274411
+rejected: DTI > 100%,794843
+"rejected: DTI > 1000% (clear artefacts, e.g. 4042.11%)",157709
+rejected: DTI < 0,761385

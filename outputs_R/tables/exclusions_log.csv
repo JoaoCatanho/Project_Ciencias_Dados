@@ -1,0 +1,7 @@
+step,rows
+accepted rows after cleaning,2260668
+regression cohort (int_rate present),2260668
+classification: removed 'Current',878317
+classification: removed 'Does not meet the credit policy' statuses,2749
+classification: removed other / missing status,0
+classification cohort,1379602

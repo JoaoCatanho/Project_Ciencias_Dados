@@ -1,0 +1,9 @@
+family,regression,classification,clustering,justification
+Baseline,predict train median int_rate,predict majority class (Good),—,reference that every model must beat
+"kNN (from scratch, NumPy)",kNN regressor (mean of k neighbours),"kNN classifier (majority vote, distance-weighted)",—,required; sensitive to scaling -> uses the train-fitted recipe; subsample for speed
+Supervised (non-ensemble) #1,Ridge / linear regression,Multinomial logistic regression (class weights),—,interpretable linear baseline; coefficients explain drivers
+Supervised (non-ensemble) #2,Decision tree regressor,Decision tree classifier (class weights),—,captures non-linear thresholds (FICO bands) and interactions
+Ensemble — bagging,Random forest regressor,Random forest classifier,—,reduces variance of trees; robust to outliers and skew
+Ensemble — boosting,HistGradientBoosting / XGBoost regressor,HistGradientBoosting / XGBoost classifier,—,state of the art for tabular data; handles missing values natively
+Deep learning,"MLP (dense, ReLU, dropout) with linear output","MLP with softmax output, weighted cross-entropy",—,required; tabular MLP suits ~100 standardised inputs
+Clustering,—,—,k-means (k = 2..10) and Gaussian mixture / DBSCAN on borrower profile; states via accepted+rejected aggregates,unsupervised structure; validated by silhouette / Davies-Bouldin and stability across seeds

@@ -1,0 +1,28 @@
+V1,V2,N
+car,Good,10012
+credit_card,Good,209677
+debt_consolidation,Good,519101
+home_improvement,Good,57099
+major_purchase,Good,19180
+medical,Good,9308
+other,Good,47396
+other_rare,Good,18058
+small_business,Good,9324
+car,At risk,82
+credit_card,At risk,1967
+debt_consolidation,At risk,6261
+home_improvement,At risk,651
+major_purchase,At risk,200
+medical,At risk,91
+other,At risk,550
+other_rare,At risk,175
+small_business,At risk,125
+car,Default,1695
+credit_card,Default,41935
+debt_consolidation,Default,137451
+home_improvement,Default,12135
+major_purchase,Default,4150
+medical,Default,2506
+other,Default,12346
+other_rare,Default,4614
+small_business,Default,3724
