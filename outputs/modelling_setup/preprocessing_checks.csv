@@ -1,0 +1,3 @@
+task,n_fit,n_transform,n_encoded_features,finite
+regression,5000,1000,101,True
+classification,5000,1000,108,True

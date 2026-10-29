@@ -1,0 +1,6 @@
+{
+  "k": 5,
+  "weights": "distance",
+  "selection_metric": "f1_macro",
+  "source": "training CV only"
+}

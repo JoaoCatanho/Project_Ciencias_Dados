@@ -1,0 +1,4 @@
+task,partition,model,k,weights,n_train_available,n_train,n_evaluation,n_features,fit_transform_seconds,shared_neighbor_search_seconds,mae,rmse,r2
+regression,validation,knn_scratch,15.0,distance,466345.0,10000,855502,101.0,0.9286814590013819,69.52218245800032,2.978550796071473,3.768190295494803,0.3418681146737159
+regression,validation,dummy_sample_mean,,,,10000,855502,,,,3.822250915850577,4.740755356026996,-0.041699288043372196
+regression,validation,dummy_sample_median,,,,10000,855502,,,,3.7886199097138284,4.717786086728315,-0.031629539418596364

@@ -1,0 +1,35 @@
+{
+  "configuration": {
+    "seed": 42,
+    "n_splits": 5,
+    "classification_cv_min_train_end": "2014-02",
+    "search_candidates": 12,
+    "expensive_training_cap": 50000,
+    "preprocessing_check_train": 5000,
+    "preprocessing_check_validation": 1000,
+    "regression_selection_metric": "rmse",
+    "classification_selection_metric": "f1_macro",
+    "neural_network_seeds": [
+      42,
+      43,
+      44
+    ],
+    "neural_network_max_epochs": 100,
+    "neural_network_patience": 10
+  },
+  "split": {
+    "date_col": "issue_d",
+    "train_end": "2014-12",
+    "val_end": "2016-12"
+  },
+  "classification_labels": {
+    "0": "Good",
+    "1": "At risk",
+    "2": "Default"
+  },
+  "test_policy": "Reserved for Notebook 12; outcomes not read in Notebook 06",
+  "preprocessing": "Fit every learned transform on the current training fold only",
+  "sampling": "Seeded training-only sampling; record indices and actual sizes",
+  "final_refit": "Freeze choices, refit on train + validation, then score test once",
+  "interpretation": "Retrospective chronological evaluation; not a historical backtest"
+}

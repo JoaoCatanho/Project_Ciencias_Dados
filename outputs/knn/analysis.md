@@ -1,0 +1,23 @@
+# Notebook 07 — observed development results
+
+- Regression selected **k=15, distance weights** using training CV. Validation MAE **2.979**, RMSE **3.768 percentage points**, and R² **0.342**. RMSE changes by **20.7% lower** relative to Notebook 06's mean baseline (4.752).
+- Classification selected **k=5, distance weights** using training CV. Validation accuracy **76.32%**, macro F1 **0.335** (baseline 0.291), macro OVR AUC **0.566**.
+- At risk recall **0.00%**; Default recall **8.63%**. Minority failures must be considered separately from overall accuracy.
+- Classification CV training samples contain only **2–13 At risk examples**. Full-training-data and sampled-training-data baselines are both reported; all comparisons use identical evaluation rows.
+- Regression mean residual **-0.520 percentage points** (positive means underprediction). Monthly errors and scatterplots show temporal and rate-dependent limitations.
+- Total experiment time **3.10 minutes**. Search timings are shared across candidates and must not be added repeatedly.
+- Test data remain unread. This demonstrates a working custom algorithm and development performance, not final generalization or deployment readiness.
+
+## 8. Assessment of the observed results
+
+**Regression learns a useful signal, with material remaining error.** CV selected 15 neighbours with distance weighting: RMSE **2.759 ± 0.553** across five folds, compared with **3.768** on 2015–2016 validation. Validation RMSE is **20.7% below** the full-training mean baseline and MAE is **2.979 percentage points**. The CV-to-validation gap limits confidence in transferring early-vintage performance to later loans; changing training sizes and feature availability also contribute, so it cannot be attributed to temporal change alone.
+
+The actual-versus-predicted plot shows predictions compressed toward the middle: low rates are often overpredicted and high rates underpredicted. The average actual-minus-predicted residual is **−0.520 percentage points**, indicating net overprediction. Monthly RMSE ranges from approximately **3.39 to 4.31**; mean residuals turn positive in the second half of 2016. This motivates monitoring error by vintage and rate range. It does not justify tuning against the reserved test set.
+
+**Classification improves one objective but remains unsuitable for risk decisions.** CV selected five distance-weighted neighbours. Validation macro F1 rises from **0.291 to 0.335**, while accuracy falls from **77.36% to 76.32%**. These are different objectives, not contradictory results: the model identifies some defaults at the cost of additional errors on Good loans. Macro AUC is only **0.566**, indicating limited overall class-ranking signal.
+
+The confusion matrix is decisive: **12,426 of 144,056 defaults** are detected (**8.63% recall**), while **131,623 defaults** are labelled Good. None of the **9,491 At risk loans** is correctly identified. Of the **13** At risk predictions, all are false positives. The final training sample contains only **15 At risk examples**, and CV samples contain **2–13**. Sampling, prevalence, feature representation, and follow-up differences can constrain performance; this experiment does not isolate their individual effects. Sample-matched dummy results confirm that the reported improvements are not simply a change in the constant baseline caused by sampling.
+
+**Preprocessing warnings reflect unavailable historical fields.** Early regression training folds have entirely missing bureau variables. The existing median imputer drops such columns because no training median exists; it applies that same fitted feature mask when transforming evaluation rows. This is fold-safe, and borrowing later values would introduce leakage. Different categorical levels and missing columns explain encoded widths of **94–102** across regression CV folds and **108–111** across classification CV folds. The final development fits use **101** and **108** encoded columns respectively. Consequently early and late folds do not have identical feature information, another limitation of the CV comparison.
+
+**Recommended handoff:** retain these scores as the custom-kNN reference. Proceed with the planned non-ensemble models, using training-only class weights where supported and reporting per-class recall. Evaluate engineered-feature ablations and larger training budgets as explicit development experiments if warranted. Do not present the classifier as an effective risk detector, change the three-class target silently, or claim that development results establish final generalization. Final test data remain reserved.

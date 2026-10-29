@@ -1,0 +1,6 @@
+{
+  "k": 15,
+  "weights": "distance",
+  "selection_metric": "rmse",
+  "source": "training CV only"
+}

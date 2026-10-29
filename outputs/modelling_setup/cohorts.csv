@@ -1,0 +1,7 @@
+task,partition,n,date_min,date_max,n_predictors,count_source
+regression,train,466345,2007-06-01,2014-12-01,38.0,loaded development data
+regression,validation,855502,2015-01-01,2016-12-01,38.0,loaded development data
+regression,test_reserved,938821,,,,Part 1 metadata only
+classification,train,451671,2007-06-01,2014-12-01,44.0,loaded development data
+classification,validation,678142,2015-01-01,2016-12-01,44.0,loaded development data
+classification,test_reserved,249789,,,,Part 1 metadata only

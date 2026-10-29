@@ -1,0 +1,9 @@
+task,partition,label,mean,std,median,count,proportion
+regression,train,int_rate,13.828463047743622,4.357966080347118,13.66,,
+regression,validation,int_rate,12.823918693351974,4.644902631292272,12.29,,
+classification,train,0,,,,374560.0,0.8292761766861277
+classification,train,1,,,,611.0,0.001352754549218347
+classification,train,2,,,,76500.0,0.1693710687646539
+classification,validation,0,,,,524595.0,0.7735769204679845
+classification,validation,1,,,,9491.0,0.013995593843177388
+classification,validation,2,,,,144056.0,0.21242748568883804

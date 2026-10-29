@@ -1,0 +1,47 @@
+{
+  "configuration": {
+    "seed": 42,
+    "training_cap": 10000,
+    "neighbors": [
+      5,
+      15,
+      31
+    ],
+    "weights": [
+      "uniform",
+      "distance"
+    ],
+    "batch_size": 256,
+    "blas_threads": 2
+  },
+  "split": {
+    "date_col": "issue_d",
+    "train_end": "2014-12",
+    "val_end": "2016-12"
+  },
+  "protocol": {
+    "seed": 42,
+    "n_splits": 5,
+    "classification_cv_min_train_end": "2014-02",
+    "search_candidates": 12,
+    "expensive_training_cap": 50000,
+    "preprocessing_check_train": 5000,
+    "preprocessing_check_validation": 1000,
+    "regression_selection_metric": "rmse",
+    "classification_selection_metric": "f1_macro",
+    "neural_network_seeds": [
+      42,
+      43,
+      44
+    ],
+    "neural_network_max_epochs": 100,
+    "neural_network_patience": 10
+  },
+  "python": "3.14.6",
+  "numpy": "2.5.3",
+  "pandas": "3.0.6",
+  "sklearn": "1.9.1",
+  "test_policy": "No test rows read; train-only development models",
+  "training_rows": "Saved positions reference the chronologically sorted training cohort; filenames identify folds",
+  "selection": "CV mean RMSE minimized / CV mean macro F1 maximized; validation scored after selection"
+}
