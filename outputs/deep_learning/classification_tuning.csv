@@ -1,0 +1,3 @@
+parameters,mean,std,count
+"{""class_weight"": ""balanced"", ""learning_rate"": 0.001}",0.34887795764453783,0.004047194186798259,5
+"{""class_weight"": ""none"", ""learning_rate"": 0.001}",0.30705209205218575,0.009187528609973721,5

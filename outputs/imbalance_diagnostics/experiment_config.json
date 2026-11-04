@@ -1,0 +1,110 @@
+{
+  "configuration": {
+    "seeds": [
+      42,
+      43,
+      44
+    ],
+    "policies": [
+      "none",
+      "weighted",
+      "under",
+      "over",
+      "hybrid"
+    ],
+    "treatments": [
+      "current",
+      "original",
+      "joint",
+      "joint_robust"
+    ],
+    "good_to_default_cap": 2.0,
+    "target_risk_share_nonrisk": 0.02,
+    "maximum_risk_replication": 20,
+    "lower_quantile": 0.005,
+    "upper_quantile": 0.995,
+    "review_fraction": 0.01,
+    "risk_thresholds": [
+      0.02,
+      0.05,
+      0.1,
+      0.2,
+      0.3,
+      0.4,
+      0.5,
+      0.6
+    ],
+    "logistic_c": 1.0,
+    "logistic_max_iter": 200,
+    "logistic_tol": 0.001,
+    "threads": 2,
+    "boosting_iterations": 100,
+    "boosting_leaf_nodes": 31,
+    "boosting_learning_rate": 0.1
+  },
+  "split": {
+    "date_col": "issue_d",
+    "train_end": "2014-12",
+    "val_end": "2016-12"
+  },
+  "predictor_plan": {
+    "numeric": [
+      "loan_amnt",
+      "term",
+      "annual_inc",
+      "dti",
+      "fico_range_low",
+      "fico_range_high",
+      "delinq_2yrs",
+      "inq_last_6mths",
+      "open_acc",
+      "total_acc",
+      "pub_rec",
+      "pub_rec_bankruptcies",
+      "mort_acc",
+      "revol_bal",
+      "revol_util",
+      "tot_cur_bal",
+      "tot_hi_cred_lim",
+      "bc_util",
+      "bc_open_to_buy",
+      "mo_sin_old_rev_tl_op",
+      "num_actv_rev_tl",
+      "pct_tl_nvr_dlq",
+      "installment",
+      "int_rate",
+      "loan_to_income",
+      "dti_x_loan_to_income",
+      "credit_hist_months",
+      "revol_util_bucket",
+      "total_credit_lines",
+      "inquiries_per_open_account",
+      "util_x_fico",
+      "bc_pressure",
+      "delinq_rate",
+      "loan_per_term",
+      "emp_length_years",
+      "has_bankruptcy",
+      "closed_credit_share",
+      "installment_burden",
+      "rate_burden"
+    ],
+    "categorical": [
+      "home_ownership",
+      "verification_status",
+      "purpose",
+      "addr_state",
+      "application_type"
+    ]
+  },
+  "python": "3.14.6",
+  "numpy": "2.5.3",
+  "sklearn": "1.9.1",
+  "selection": "Staged training CV mean macro F1; deterministic simpler ties",
+  "validation_status": "Already used for prior diagnosis; these are development comparisons",
+  "test_policy": "No final test data read",
+  "preprocessing": "Fit complete training fold before sampling; same statistics for sampler comparisons",
+  "sample_weight_normalization": "Uniform fitting weights sum to the original training-fold size",
+  "auxiliary_input": "annual_inc_joint: assumed available at origination, used only for three affordability ratios",
+  "boosting_confirmation": "Primary seed only; fixed Notebook 09 parameters; reuse exact reference if unchanged"
+}

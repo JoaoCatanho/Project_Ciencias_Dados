@@ -1,0 +1,10 @@
+partition,application_type,field,n,missing_share
+train,Individual,annual_inc_joint,451671,1.0
+train,Individual,dti_joint,451671,1.0
+train,Individual,sec_app_fico_range_low,451671,1.0
+validation,Individual,annual_inc_joint,672231,1.0
+validation,Individual,dti_joint,672231,1.0
+validation,Individual,sec_app_fico_range_low,672231,1.0
+validation,Joint App,annual_inc_joint,5911,0.0
+validation,Joint App,dti_joint,5911,0.0005075283369988157
+validation,Joint App,sec_app_fico_range_low,5911,1.0

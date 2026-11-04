@@ -1,0 +1,15 @@
+{
+  "source": "Training CV average precision, separately for each review goal",
+  "choices": {
+    "At risk": {
+      "family": "logistic",
+      "variant": "current",
+      "cv_average_precision": 0.014860366220873843
+    },
+    "Default": {
+      "family": "boosting",
+      "variant": "pricing_grade",
+      "cv_average_precision": 0.3409538305730261
+    }
+  }
+}

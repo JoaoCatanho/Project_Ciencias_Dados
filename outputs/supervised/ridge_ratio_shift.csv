@@ -1,0 +1,3 @@
+partition,n,ratio_median,ratio_99th,ratio_max,joint_applications
+training,466345,0.2057142857142857,0.4599332252573998,1.3375,0
+validation,855502,0.2,0.5,35000.0,9300

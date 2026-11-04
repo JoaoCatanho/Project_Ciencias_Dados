@@ -1,0 +1,8 @@
+{
+  "parameters": {
+    "class_weight": "none",
+    "learning_rate": 0.0003
+  },
+  "source": "Training CV only",
+  "metric": "rmse"
+}

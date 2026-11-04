@@ -1,0 +1,10 @@
+model,parameters,cv_mean,cv_std,n_folds,converged,mean_fit_seconds,eligible
+decision_tree,"{""max_depth"": 10, ""min_samples_leaf"": 100}",2.6850424763606804,0.6636771905931177,5,True,0.45062119160429576,True
+decision_tree,"{""max_depth"": 10, ""min_samples_leaf"": 500}",2.741414484079423,0.5983105372653797,5,True,0.39648051680414936,True
+decision_tree,"{""max_depth"": 15, ""min_samples_leaf"": 100}",2.6724139739262407,0.6619505445234961,5,True,0.5241004918003455,True
+decision_tree,"{""max_depth"": 15, ""min_samples_leaf"": 500}",2.741149685061992,0.597852556937664,5,True,0.4172966917976737,True
+decision_tree,"{""max_depth"": 5, ""min_samples_leaf"": 100}",2.76211728842057,0.640376477879328,5,True,0.2645020415977342,True
+decision_tree,"{""max_depth"": 5, ""min_samples_leaf"": 500}",2.777660965185495,0.6102230754039406,5,True,0.26192125800298527,True
+ridge,"{""alpha"": 0.1}",2.6209497119106335,0.5846021389562445,5,True,0.013518691802164539,True
+ridge,"{""alpha"": 10.0}",2.612850871463335,0.5847103161846444,5,True,0.009550975004094653,True
+ridge,"{""alpha"": 1000.0}",2.641864242852042,0.5701900938758295,5,True,0.009844491598778404,True

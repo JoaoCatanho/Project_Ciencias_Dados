@@ -1,0 +1,33 @@
+{
+  "canonical_predictor_plan_updated": false,
+  "new_predictors_promoted_as_proven_fix": false,
+  "cv_review_goal_candidates": {
+    "At risk": {
+      "family": "logistic",
+      "variant": "current",
+      "cv_average_precision": 0.014860366220873843
+    },
+    "Default": {
+      "family": "boosting",
+      "variant": "pricing_grade",
+      "cv_average_precision": 0.3409538305730261
+    }
+  },
+  "candidate_selection_is_development_only": true,
+  "conditional_bureau_requires_original_snapshot_provenance": true,
+  "common_observation_cutoff_confirmed": false,
+  "target_and_splits_changed": false,
+  "guard_fix_fields": [
+    "last_pymnt_amnt",
+    "deferral_term",
+    "payment_plan_start_date",
+    "orig_projected_additional_accrued_interest"
+  ],
+  "next_model_handoff": "Keep required snapshot target; report support/follow-up limits, use training-only robust numeric transforms and class-specific review diagnostics",
+  "needed_for_fixed_horizon_redesign": [
+    "verified observation cutoff",
+    "status/event histories",
+    "documented outcome horizon"
+  ],
+  "precision_goals_are_illustrative_not_approved_policy": true
+}

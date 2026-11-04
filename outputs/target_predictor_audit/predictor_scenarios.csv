@@ -1,0 +1,4 @@
+variant,numeric,categorical,added_numeric,added_categorical
+current,39,5,,
+pricing_grade,39,7,,"grade, sub_grade"
+pricing_bureau,42,7,"tax_liens, collections_12_mths_ex_med, acc_now_delinq","grade, sub_grade"

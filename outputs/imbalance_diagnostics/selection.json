@@ -1,0 +1,7 @@
+{
+  "policy": "hybrid",
+  "treatment": "joint_robust",
+  "risk_threshold": 0.3,
+  "source": "Training CV only; staged selection, no validation scoring yet",
+  "criterion": "Mean macro F1; simpler policies resolve ties"
+}

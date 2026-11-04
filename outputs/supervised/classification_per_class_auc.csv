@@ -1,0 +1,7 @@
+model,label,auc
+logistic,Good,0.7109921719031
+logistic,At risk,0.6829253896360141
+logistic,Default,0.5785226336441877
+decision_tree,Good,0.6936745837620897
+decision_tree,At risk,0.6036247187004808
+decision_tree,Default,0.6057839236108896

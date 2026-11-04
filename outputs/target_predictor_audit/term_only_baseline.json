@@ -1,0 +1,6 @@
+{
+  "ap_at_risk": 0.022789316612705533,
+  "auc_at_risk": 0.6437958246485951,
+  "validation_prevalence": 0.013995593843177388,
+  "source": "Empirical class priors by term, fitted on training only; descriptive diagnostic, not causal attribution"
+}

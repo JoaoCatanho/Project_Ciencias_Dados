@@ -1,0 +1,5 @@
+task,parameters
+regression,"{""class_weight"": ""none"", ""learning_rate"": 0.001}"
+regression,"{""class_weight"": ""none"", ""learning_rate"": 0.0003}"
+classification,"{""class_weight"": ""none"", ""learning_rate"": 0.001}"
+classification,"{""class_weight"": ""balanced"", ""learning_rate"": 0.001}"

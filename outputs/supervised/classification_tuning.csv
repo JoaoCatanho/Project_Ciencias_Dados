@@ -1,0 +1,13 @@
+model,parameters,cv_mean,cv_std,n_folds,converged,mean_fit_seconds,eligible
+decision_tree,"{""class_weight"": ""balanced"", ""max_depth"": 10, ""min_samples_leaf"": 500}",0.35958633648879756,0.003946211525846565,5,True,4.726133291801671,True
+decision_tree,"{""class_weight"": ""balanced"", ""max_depth"": 15, ""min_samples_leaf"": 500}",0.36419836657147997,0.004539260455407548,5,True,5.168253041998833,True
+decision_tree,"{""class_weight"": ""balanced"", ""max_depth"": 5, ""min_samples_leaf"": 500}",0.3392145628680148,0.006941050305721019,5,True,2.7917881000001215,True
+decision_tree,"{""class_weight"": null, ""max_depth"": 10, ""min_samples_leaf"": 500}",0.3053117142513512,0.0036857422435791687,5,True,4.9726052084035475,True
+decision_tree,"{""class_weight"": null, ""max_depth"": 15, ""min_samples_leaf"": 500}",0.30599238376635124,0.004972773826790698,5,True,4.740726583398645,True
+decision_tree,"{""class_weight"": null, ""max_depth"": 5, ""min_samples_leaf"": 500}",0.29833176280260826,0.0014408326050169347,5,True,2.6380325083999194,True
+logistic,"{""C"": 0.01, ""class_weight"": ""balanced""}",0.35148906650164724,0.005377187332262433,5,True,1.452604899997823,True
+logistic,"{""C"": 0.01, ""class_weight"": null}",0.31134934383060653,0.00469184058911588,5,True,1.0723429081990616,True
+logistic,"{""C"": 0.1, ""class_weight"": ""balanced""}",0.3531614366571311,0.006583934494883437,5,True,1.7260293834027833,True
+logistic,"{""C"": 0.1, ""class_weight"": null}",0.31152844950685304,0.0044669512527623,5,True,0.8555249582015676,True
+logistic,"{""C"": 1.0, ""class_weight"": ""balanced""}",0.3538054716847918,0.006755057692730873,5,True,1.8852261752006598,True
+logistic,"{""C"": 1.0, ""class_weight"": null}",0.3114862099060475,0.004464314096047603,5,True,0.857789824801148,True

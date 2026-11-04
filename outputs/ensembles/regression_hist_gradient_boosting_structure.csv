@@ -1,0 +1,5 @@
+property,value
+iterations,100
+trees_per_iteration,1
+encoded_features,105
+early_stopping,False

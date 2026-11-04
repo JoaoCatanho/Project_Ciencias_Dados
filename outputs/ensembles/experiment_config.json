@@ -1,0 +1,159 @@
+{
+  "configuration": {
+    "seed": 42,
+    "blas_threads": 2,
+    "forest_jobs": 2,
+    "forest_trees": 64,
+    "forest_depths": [
+      12,
+      20
+    ],
+    "forest_min_samples_leaf": 100,
+    "forest_max_features": 0.5,
+    "forest_max_samples": 0.5,
+    "boosting_iterations": 100,
+    "boosting_learning_rates": [
+      0.05,
+      0.1
+    ],
+    "boosting_leaf_nodes": [
+      15,
+      31
+    ],
+    "boosting_classification_learning_rate": 0.1,
+    "boosting_min_samples_leaf": 100,
+    "boosting_l2": 1.0,
+    "class_weights": [
+      null,
+      "balanced"
+    ]
+  },
+  "protocol": {
+    "seed": 42,
+    "n_splits": 5,
+    "classification_cv_min_train_end": "2014-02",
+    "search_candidates": 12,
+    "expensive_training_cap": 50000,
+    "preprocessing_check_train": 5000,
+    "preprocessing_check_validation": 1000,
+    "regression_selection_metric": "rmse",
+    "classification_selection_metric": "f1_macro",
+    "neural_network_seeds": [
+      42,
+      43,
+      44
+    ],
+    "neural_network_max_epochs": 100,
+    "neural_network_patience": 10
+  },
+  "split": {
+    "date_col": "issue_d",
+    "train_end": "2014-12",
+    "val_end": "2016-12"
+  },
+  "predictor_plan": {
+    "regression": {
+      "numeric": [
+        "loan_amnt",
+        "term",
+        "annual_inc",
+        "dti",
+        "fico_range_low",
+        "fico_range_high",
+        "delinq_2yrs",
+        "inq_last_6mths",
+        "open_acc",
+        "total_acc",
+        "pub_rec",
+        "pub_rec_bankruptcies",
+        "mort_acc",
+        "revol_bal",
+        "revol_util",
+        "tot_cur_bal",
+        "tot_hi_cred_lim",
+        "bc_util",
+        "bc_open_to_buy",
+        "mo_sin_old_rev_tl_op",
+        "num_actv_rev_tl",
+        "pct_tl_nvr_dlq",
+        "loan_to_income",
+        "dti_x_loan_to_income",
+        "revol_util_bucket",
+        "total_credit_lines",
+        "inquiries_per_open_account",
+        "util_x_fico",
+        "bc_pressure",
+        "delinq_rate",
+        "loan_per_term",
+        "emp_length_years",
+        "has_bankruptcy",
+        "closed_credit_share"
+      ],
+      "categorical": [
+        "home_ownership",
+        "purpose",
+        "addr_state",
+        "application_type"
+      ]
+    },
+    "classification": {
+      "numeric": [
+        "loan_amnt",
+        "term",
+        "annual_inc",
+        "dti",
+        "fico_range_low",
+        "fico_range_high",
+        "delinq_2yrs",
+        "inq_last_6mths",
+        "open_acc",
+        "total_acc",
+        "pub_rec",
+        "pub_rec_bankruptcies",
+        "mort_acc",
+        "revol_bal",
+        "revol_util",
+        "tot_cur_bal",
+        "tot_hi_cred_lim",
+        "bc_util",
+        "bc_open_to_buy",
+        "mo_sin_old_rev_tl_op",
+        "num_actv_rev_tl",
+        "pct_tl_nvr_dlq",
+        "installment",
+        "int_rate",
+        "loan_to_income",
+        "dti_x_loan_to_income",
+        "credit_hist_months",
+        "revol_util_bucket",
+        "total_credit_lines",
+        "inquiries_per_open_account",
+        "util_x_fico",
+        "bc_pressure",
+        "delinq_rate",
+        "loan_per_term",
+        "emp_length_years",
+        "has_bankruptcy",
+        "closed_credit_share",
+        "installment_burden",
+        "rate_burden"
+      ],
+      "categorical": [
+        "home_ownership",
+        "verification_status",
+        "purpose",
+        "addr_state",
+        "application_type"
+      ]
+    }
+  },
+  "python": "3.14.6",
+  "numpy": "2.5.3",
+  "pandas": "3.0.6",
+  "sklearn": "1.9.1",
+  "sampling": "All training rows retained; each forest tree uses a bootstrap draw of 50% of fitting rows",
+  "selection": "Training CV mean RMSE minimized / macro F1 maximized per family",
+  "test_policy": "No test rows read; development artifacts only",
+  "early_stopping": "Disabled; fixed boosting iterations, calendar CV only",
+  "feature_policy": "Same allowlists and transforms as Notebook 08; no joint-income repair"
+}

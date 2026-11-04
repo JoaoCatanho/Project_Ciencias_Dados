@@ -1,0 +1,7 @@
+model,label,auc
+random_forest,Good,0.7106928997621677
+random_forest,At risk,0.6504637426838096
+random_forest,Default,0.6665943156505091
+hist_gradient_boosting,Good,0.722800783929324
+hist_gradient_boosting,At risk,0.6686346476605229
+hist_gradient_boosting,Default,0.6972192065307237

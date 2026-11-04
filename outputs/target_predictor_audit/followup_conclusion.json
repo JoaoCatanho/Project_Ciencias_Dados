@@ -1,0 +1,14 @@
+{
+  "confirmed_common_observation_cutoff": null,
+  "missing_observation_metadata": [
+    "snapshot_date",
+    "observation_date",
+    "loan_status_date",
+    "outcome_observed_date"
+  ],
+  "scheduled_maturity_is_not_actual_outcome_time": true,
+  "note": "Scenarios are hypothetical, not inferred extraction dates; event maxima cannot establish all label observation dates.",
+  "historical_backtest_supported": false,
+  "target_and_cohorts_changed": false,
+  "audit_source": "accepted_regression_fe development rows with non-null interest rate; known-outcome coverage verified"
+}

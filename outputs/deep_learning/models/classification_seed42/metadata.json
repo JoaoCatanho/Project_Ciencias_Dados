@@ -1,0 +1,101 @@
+{
+  "task": "classification",
+  "parameters": {
+    "class_weight": "balanced",
+    "learning_rate": 0.001
+  },
+  "seed": 42,
+  "configuration": {
+    "hidden": [
+      128,
+      64
+    ],
+    "dropout": 0.2,
+    "weight_decay": 0.0001,
+    "batch_size": 2048,
+    "prediction_batch_size": 32768,
+    "max_epochs": 60,
+    "patience": 8,
+    "min_delta": 0.0001,
+    "gradient_clip": 5.0,
+    "threads": 2,
+    "cv_seed": 42,
+    "final_seeds": [
+      42,
+      43,
+      44
+    ],
+    "regression_rates": [
+      0.001,
+      0.0003
+    ],
+    "classification_weights": [
+      "none",
+      "balanced"
+    ],
+    "lower_quantile": 0.005,
+    "upper_quantile": 0.995,
+    "regression_training_cap": 50000
+  },
+  "split": {
+    "date_col": "issue_d",
+    "train_end": "2014-12",
+    "val_end": "2016-12"
+  },
+  "predictors": {
+    "numeric": [
+      "loan_amnt",
+      "term",
+      "annual_inc",
+      "dti",
+      "fico_range_low",
+      "fico_range_high",
+      "delinq_2yrs",
+      "inq_last_6mths",
+      "open_acc",
+      "total_acc",
+      "pub_rec",
+      "pub_rec_bankruptcies",
+      "mort_acc",
+      "revol_bal",
+      "revol_util",
+      "tot_cur_bal",
+      "tot_hi_cred_lim",
+      "bc_util",
+      "bc_open_to_buy",
+      "mo_sin_old_rev_tl_op",
+      "num_actv_rev_tl",
+      "pct_tl_nvr_dlq",
+      "installment",
+      "int_rate",
+      "loan_to_income",
+      "dti_x_loan_to_income",
+      "credit_hist_months",
+      "revol_util_bucket",
+      "total_credit_lines",
+      "inquiries_per_open_account",
+      "util_x_fico",
+      "bc_pressure",
+      "delinq_rate",
+      "loan_per_term",
+      "emp_length_years",
+      "has_bankruptcy",
+      "closed_credit_share",
+      "installment_burden",
+      "rate_burden"
+    ],
+    "categorical": [
+      "home_ownership",
+      "verification_status",
+      "purpose",
+      "addr_state",
+      "application_type"
+    ]
+  },
+  "n_train": 451671,
+  "n_train_available": 451671,
+  "selected_epochs": 3,
+  "stage": "Training-only development artifact; final test unread",
+  "feature_policy": "Original allowlist; train-fitted 0.5\u201399.5% clipping and declared log1p",
+  "epoch_policy": "Inner last-month early stopping, fresh full-partition fixed-epoch refit"
+}

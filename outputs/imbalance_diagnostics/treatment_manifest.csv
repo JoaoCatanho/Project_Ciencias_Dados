@@ -1,0 +1,5 @@
+treatment,numeric_predictors,categorical_predictors,joint_auxiliary_required
+current,39,5,False
+original,24,5,False
+joint,39,5,True
+joint_robust,39,5,True

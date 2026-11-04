@@ -1,0 +1,9 @@
+model,parameters,cv_mean,cv_std,n_folds,converged,mean_fit_seconds,eligible
+hist_gradient_boosting,"{""class_weight"": ""balanced"", ""learning_rate"": 0.1, ""max_leaf_nodes"": 15}",0.3866436708412381,0.004293735157603776,5,True,28.89736900840071,True
+hist_gradient_boosting,"{""class_weight"": ""balanced"", ""learning_rate"": 0.1, ""max_leaf_nodes"": 31}",0.3967318163157812,0.008920810297957792,5,True,31.677182599605295,True
+hist_gradient_boosting,"{""class_weight"": null, ""learning_rate"": 0.1, ""max_leaf_nodes"": 15}",0.30875326502428324,0.004731340333119576,5,True,29.564330883399816,True
+hist_gradient_boosting,"{""class_weight"": null, ""learning_rate"": 0.1, ""max_leaf_nodes"": 31}",0.31194385699354427,0.0066818058131786215,5,True,32.57265711680229,True
+random_forest,"{""class_weight"": ""balanced"", ""max_depth"": 12}",0.37289872438694094,0.003761685208451631,5,True,22.697317041800126,True
+random_forest,"{""class_weight"": ""balanced"", ""max_depth"": 20}",0.3833955145780171,0.00252465386159113,5,True,23.485254824804723,True
+random_forest,"{""class_weight"": null, ""max_depth"": 12}",0.3002255094884742,0.002081280495195676,5,True,34.19430432479712,True
+random_forest,"{""class_weight"": null, ""max_depth"": 20}",0.3007582454017314,0.0027249468501873183,5,True,37.84280930000241,True

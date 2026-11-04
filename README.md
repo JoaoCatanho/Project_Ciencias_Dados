@@ -95,3 +95,49 @@ Run `notebooks/07_knn_from_scratch.ipynb` after Notebook 06. `Python/knn.py` imp
 The declared budget is 10,000 training rows per fold, six k/weight settings, five chronological folds, and two BLAS threads. All evaluation rows are retained. Classification sampling approximately preserves prevalence while ensuring every available training class is represented. Full training and sample-matched dummy comparisons are both included. Test rows remain reserved for final evaluation.
 
 Outputs are in `outputs/knn/`: experiment configuration, sampled training positions, CV/tuning tables, validation predictions, plots, interpretation, and saved preprocessing/model bundles. Bundles are development artifacts fitted on training samples, not final deployment models. `joblib` and `threadpoolctl` are used directly for persistence and BLAS resource control. The notebook can take several minutes; exact search scales linearly with training rows, evaluation rows, and encoded features.
+
+## Part 2: non-ensemble supervised models
+
+Run `notebooks/08_supervised_models.ipynb` after Notebooks 06 and 07. The reusable classes in `Python/supervised_models.py` define experiment settings, construct Ridge/logistic regression and individual decision trees, and run fold-aware training, CV selection, validation scoring, and persistence. No additional packages beyond `requirements.txt` are needed.
+
+Notebook 08 retains every training and validation row. It compares nine regression and twelve classification configurations across the same five chronological folds used previously. Classification compares ordinary and balanced class weights. All learned preprocessing and class weights use the current training partition only. Candidates must converge in all CV folds to be eligible for selection. The selected parameters are saved before external validation scoring; saved-model prediction and probability checks run automatically.
+
+Outputs in `outputs/supervised/` include configuration, candidate and tuning tables, per-fold/full-validation metrics and timing, predictions, coefficients/importances, confusion matrices, plots, analysis, and four development model bundles. Comparisons with kNN verify identical validation targets and order, but kNN used 10,000 training rows while these models use the full training cohorts. Final test rows remain unread. Full-cohort CV may take several minutes; runtime depends on the machine and optimizer convergence.
+
+Notebook 08 also audits an observed Ridge extrapolation failure using `Python/regression_diagnostics.py`. It traces large errors to the primary-income loan-to-income ratio on joint applications and saves diagnostic rows, coefficient contributions, and train/validation feature-support summaries. Joint income is used only for this audit. The original fitted models, evaluation rows, and scores are retained; the notebook documents future feature-policy work rather than silently repairing validation results.
+
+## Part 2: ensemble models
+
+Run `notebooks/09_ensemble_models.ipynb` after Notebook 08. `Python/ensemble_models.py` provides bagging (random forests) and histogram gradient boosting for both tasks, reusing the full-cohort, fold-aware runner and save/reload checks from Notebook 08. No additional packages are required beyond `requirements.txt`.
+
+The declared search has six regression and eight classification configurations across five chronological folds (70 CV fits), plus four selected full-training fits. Forests use 64 trees, a 50%-size bootstrap draw per tree, and two workers. Boosting uses 100 iterations with random internal early stopping disabled. All evaluation rows are retained; class weights and preprocessing are fitted within training folds. The fixed budget is checked explicitly and does not establish optimum convergence.
+
+`outputs/ensembles/` contains tuning/metric tables, comparisons with Notebooks 06–08, predictions, confusion matrices, plots, forest importances, boosting structure summaries, application-type diagnostics, analysis, and four development model bundles. Cohort targets and order are verified against previous predictions. The joint-applicant feature policy is deliberately unchanged; its effects are documented rather than repaired using validation results. Final test data remain unread.
+
+## Part 2: imbalance and treatment diagnostics
+
+Run `notebooks/09b_imbalance_diagnostics.ipynb` after Notebook 09. The POO implementation in `Python/imbalance_diagnostics.py` compares unchanged fitting, balanced class weights, partial random undersampling, partial oversampling, and a hybrid. Random policies use three seeds. Training-fold preprocessing is held constant across samplers; uniform fitting weights sum to the original fold size. All minority originals are retained, replication is capped, and evaluation rows are never sampled. No new packages or synthetic-data dependencies are required.
+
+The staged diagnostic selects sampling by training CV, then compares current features, removal of engineered columns, joint-income affordability, and joint affordability with training-fitted clipping/log transforms. It selects an At risk decision threshold using training out-of-fold predictions, reports per-class average precision and a fixed 1% review budget, and confirms the selected combined treatment with fixed-parameter boosting. An unchanged boosting reference is reused transparently. This is a staged ablation, not an exhaustive interaction study.
+
+Outputs in `outputs/imbalance_diagnostics/` contain the declared configuration, CV predictions/summaries, sampling provenance, seed variability, development validation comparisons, confusions, plots, selected model bundles, and analysis. Joint income is an explicitly declared auxiliary origination-time input; absent/non-applicable values are not replaced with zero. The existing predictor plan and earlier datasets/results remain unchanged. Previous validation findings motivated the design, so results are development comparisons; the final test set remains unread.
+
+## Part 2: target/predictor audit and class-specific review
+
+Run `notebooks/09c_target_predictor_audit.ipynb` after 09b. `Python/target_predictor_audit.py` audits development statuses by vintage and loan term, Current/unknown exclusions, event-date metadata, hypothetical scheduled-term scenarios, predictor missingness, joint non-applicability, and every available source column. It does not infer an observation cutoff from payment maxima or change the target/cohorts.
+
+The controlled experiment compares current inputs, adding original grade/subgrade for the after-pricing classifier, and a conditional extension with three original-bureau counts. The issuer prospectus supports the concepts at underwriting, but cannot certify every historical record's timestamp; the bureau extension remains conditional and other fields remain deferred. Grades remain forbidden for pre-pricing regression. Fixed balanced logistic and histogram boosting models use the same five chronological folds (30 CV fits and six final training fits).
+
+Model/scenario choices maximize training-CV average precision separately for At risk and Default review. Illustrative precision floors must be met with at least 20 alerts in every CV fold or are reported infeasible. Validation evaluates those fixed rules and 1%/5% review budgets without replacing the three-class prediction task. Outputs, saved models, input/availability manifests, PR curves, operating tables, and analysis are in `outputs/target_predictor_audit/`. No final test rows are read and earlier results/plans are retained.
+
+The general leakage guard now explicitly includes `last_pymnt_amnt`, `deferral_term`, `payment_plan_start_date`, and `orig_projected_additional_accrued_interest`. Previous modelling allowlists already excluded these, so the fix does not change their inputs or scores.
+
+## Part 2: deep learning
+
+Run `notebooks/10_deep_learning.ipynb` after the diagnostic notebooks. Install the updated `requirements.txt` (PyTorch is required). `Python/deep_learning.py` provides the tabular MLP, training-only numeric conditioning, calendar early stopping, trainer, and reloadable model bundle; `Python/deep_learning_experiments.py` runs chronological CV and three final training seeds per task.
+
+The original splits, three classes, and predictor allowlists are retained. Numerical conditioning uses training-fitted 0.5–99.5% clipping, declared nonnegative log transforms, and the existing imputation/scaling/encoding pipeline. No grade or joint-income extension is introduced. Classification retains every available fitting row, including all 611 At risk examples in final refits. Regression fitting is capped at a seeded 50,000 rows; all stopping and evaluation rows are retained.
+
+The latest month inside each fitting partition selects the epoch count. Fresh preprocessing and a fresh network then refit that whole partition for the selected count; outer validation never selects epochs. Five original calendar folds compare two configurations per task, followed by seeds 42/43/44. The declared CPU budget is 60 epochs, patience 8, two threads, and a 128–64 ReLU/dropout architecture. Training histories, epoch/support tables, bounds, seed variability, comparisons, predictions, plots, and analysis are saved under `outputs/deep_learning/`.
+
+Model directories contain `model.pt` (state dict and target statistics), fitted preprocessing, and metadata. `NeuralModelBundle.load(directory).predict_frame(data)` performs inference; automatic save/reload checks run during the notebook. Artifacts are development models, not final test-evaluated models. The original test set remains unread, and snapshot/follow-up limitations remain applicable.

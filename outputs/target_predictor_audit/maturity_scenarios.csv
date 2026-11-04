@@ -1,0 +1,55 @@
+partition,term,loan_status,n,share_scheduled_term_elapsed,hypothetical_cutoff
+train,36.0,Charged Off,43823,1.0,2018-12-31
+train,36.0,Does not meet the credit policy. Status:Charged Off,649,1.0,2018-12-31
+train,36.0,Does not meet the credit policy. Status:Fully Paid,1789,1.0,2018-12-31
+train,36.0,Fully Paid,291735,1.0,2018-12-31
+train,60.0,Charged Off,32676,0.42324641939037827,2018-12-31
+train,60.0,Current,11925,0.0005031446540880503,2018-12-31
+train,60.0,Default,1,0.0,2018-12-31
+train,60.0,Does not meet the credit policy. Status:Charged Off,112,1.0,2018-12-31
+train,60.0,Does not meet the credit policy. Status:Fully Paid,199,1.0,2018-12-31
+train,60.0,Fully Paid,82825,0.49669785692725626,2018-12-31
+train,60.0,In Grace Period,201,0.004975124378109453,2018-12-31
+train,60.0,Late (16-30 days),73,0.0,2018-12-31
+train,60.0,Late (31-120 days),337,0.008902077151335312,2018-12-31
+validation,36.0,Charged Off,88244,0.47744889170935134,2018-12-31
+validation,36.0,Current,86695,0.00083049772189861,2018-12-31
+validation,36.0,Default,8,0.0,2018-12-31
+validation,36.0,Fully Paid,427135,0.5639762604328842,2018-12-31
+validation,36.0,In Grace Period,1105,0.008144796380090498,2018-12-31
+validation,36.0,Late (16-30 days),589,0.008488964346349746,2018-12-31
+validation,36.0,Late (31-120 days),2892,0.021092669432918397,2018-12-31
+validation,60.0,Charged Off,55801,0.0,2018-12-31
+validation,60.0,Current,90665,0.0,2018-12-31
+validation,60.0,Default,3,0.0,2018-12-31
+validation,60.0,Fully Paid,97460,0.0,2018-12-31
+validation,60.0,In Grace Period,1300,0.0,2018-12-31
+validation,60.0,Late (16-30 days),592,0.0,2018-12-31
+validation,60.0,Late (31-120 days),3013,0.0,2018-12-31
+train,36.0,Charged Off,43823,1.0,2019-12-31
+train,36.0,Does not meet the credit policy. Status:Charged Off,649,1.0,2019-12-31
+train,36.0,Does not meet the credit policy. Status:Fully Paid,1789,1.0,2019-12-31
+train,36.0,Fully Paid,291735,1.0,2019-12-31
+train,60.0,Charged Off,32676,1.0,2019-12-31
+train,60.0,Current,11925,1.0,2019-12-31
+train,60.0,Default,1,1.0,2019-12-31
+train,60.0,Does not meet the credit policy. Status:Charged Off,112,1.0,2019-12-31
+train,60.0,Does not meet the credit policy. Status:Fully Paid,199,1.0,2019-12-31
+train,60.0,Fully Paid,82825,1.0,2019-12-31
+train,60.0,In Grace Period,201,1.0,2019-12-31
+train,60.0,Late (16-30 days),73,1.0,2019-12-31
+train,60.0,Late (31-120 days),337,1.0,2019-12-31
+validation,36.0,Charged Off,88244,1.0,2019-12-31
+validation,36.0,Current,86695,1.0,2019-12-31
+validation,36.0,Default,8,1.0,2019-12-31
+validation,36.0,Fully Paid,427135,1.0,2019-12-31
+validation,36.0,In Grace Period,1105,1.0,2019-12-31
+validation,36.0,Late (16-30 days),589,1.0,2019-12-31
+validation,36.0,Late (31-120 days),2892,1.0,2019-12-31
+validation,60.0,Charged Off,55801,0.0,2019-12-31
+validation,60.0,Current,90665,0.0,2019-12-31
+validation,60.0,Default,3,0.0,2019-12-31
+validation,60.0,Fully Paid,97460,0.0,2019-12-31
+validation,60.0,In Grace Period,1300,0.0,2019-12-31
+validation,60.0,Late (16-30 days),592,0.0,2019-12-31
+validation,60.0,Late (31-120 days),3013,0.0,2019-12-31

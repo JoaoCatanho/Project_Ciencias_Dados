@@ -1,0 +1,4 @@
+field,n_observed,earliest,latest,role
+last_pymnt_d,1320660,2007-12-01 00:00:00,2019-03-01 00:00:00,audit only; not observation cutoff
+last_credit_pull_d,1321787,2007-05-01 00:00:00,2019-04-01 00:00:00,audit only; not observation cutoff
+next_pymnt_d,202148,2008-01-01 00:00:00,2019-05-01 00:00:00,audit only; not observation cutoff

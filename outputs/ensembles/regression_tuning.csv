@@ -1,0 +1,7 @@
+model,parameters,cv_mean,cv_std,n_folds,converged,mean_fit_seconds,eligible
+hist_gradient_boosting,"{""learning_rate"": 0.05, ""max_leaf_nodes"": 15}",2.54625028549282,0.6446024476345127,5,True,2.0572188086051026,True
+hist_gradient_boosting,"{""learning_rate"": 0.05, ""max_leaf_nodes"": 31}",2.537319260313759,0.6554474633163603,5,True,2.381164675205946,True
+hist_gradient_boosting,"{""learning_rate"": 0.1, ""max_leaf_nodes"": 15}",2.5268664937714456,0.6775821372659468,5,True,1.8515631583984942,True
+hist_gradient_boosting,"{""learning_rate"": 0.1, ""max_leaf_nodes"": 31}",2.5311762254857646,0.6782257103866303,5,True,2.184351816805429,True
+random_forest,"{""max_depth"": 12}",2.65598954835187,0.5963631413693626,5,True,2.8979123667988462,True
+random_forest,"{""max_depth"": 20}",2.6558684229378717,0.5971092299507119,5,True,3.0262623248010643,True

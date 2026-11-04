@@ -1,0 +1,15 @@
+{
+  "metric": "f1_macro",
+  "source": "training CV only",
+  "models": {
+    "hist_gradient_boosting": {
+      "class_weight": "balanced",
+      "learning_rate": 0.1,
+      "max_leaf_nodes": 31
+    },
+    "random_forest": {
+      "class_weight": "balanced",
+      "max_depth": 20
+    }
+  }
+}

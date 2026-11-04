@@ -1,0 +1,3 @@
+model,parameters,n_train,n_evaluation,n_features,fit_seconds,predict_seconds,train_primary,converged,fit_warnings,n_iterations,mae,rmse,r2,trees_fitted,budget_completed,task,partition,preprocessing_seconds,preprocessing_notes
+hist_gradient_boosting,"{""learning_rate"": 0.1, ""max_leaf_nodes"": 15}",466345,855502,105,15.616717375000007,5.86354133299028,2.5695344222982808,True,,100,2.8888577645830997,3.5882180903021643,0.40323280507590653,100,True,regression,validation,2.5447059579892084,
+random_forest,"{""max_depth"": 20}",466345,855502,105,40.283603749994654,3.008489041007124,2.6521535724156378,True,,0,2.9508864826654038,3.6595350816425274,0.37927518428340434,64,True,regression,validation,2.5447059579892084,

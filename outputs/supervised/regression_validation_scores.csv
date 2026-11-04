@@ -1,0 +1,3 @@
+model,parameters,n_train,n_evaluation,n_features,fit_seconds,predict_seconds,train_primary,converged,fit_warnings,n_iterations,mae,rmse,r2,task,partition,preprocessing_seconds,preprocessing_notes
+decision_tree,"{""max_depth"": 15, ""min_samples_leaf"": 100}",466345,855502,105,6.399722083995584,0.13914820899663027,2.660939758869707,True,,0,2.9967267881084454,3.734422102155446,0.3536108051803095,regression,validation,2.529528708997532,
+ridge,"{""alpha"": 10.0}",466345,855502,105,0.0676883749983972,0.025553625004249625,2.8381304662230846,True,,0,3.1632436319818655,80.9742859440336,-302.90758014033804,regression,validation,2.529528708997532,

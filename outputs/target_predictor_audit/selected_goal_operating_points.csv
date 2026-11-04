@@ -1,0 +1,7 @@
+family,variant,label,precision_floor,cv_feasible,threshold,alerts,true_positives,precision,recall,alert_share,validation_floor_met
+logistic,current,1,0.05,False,,,,,,,
+logistic,current,1,0.1,False,,,,,,,
+logistic,current,1,0.2,False,,,,,,,
+boosting,pricing_grade,2,0.05,True,0.05,677893.0,144055.0,0.212504038247924,0.999993058255123,0.9996328202647824,True
+boosting,pricing_grade,2,0.1,True,0.05,677893.0,144055.0,0.212504038247924,0.999993058255123,0.9996328202647824,True
+boosting,pricing_grade,2,0.2,True,0.3,464914.0,125079.0,0.2690368541278602,0.8682665074693174,0.6855702787911676,True

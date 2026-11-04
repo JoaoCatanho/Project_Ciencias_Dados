@@ -1,0 +1,47 @@
+{
+  "configuration": {
+    "variants": [
+      "current",
+      "pricing_grade",
+      "pricing_bureau"
+    ],
+    "families": [
+      "logistic",
+      "boosting"
+    ],
+    "seed": 42,
+    "threads": 2,
+    "precision_floors": [
+      0.05,
+      0.1,
+      0.2
+    ],
+    "minimum_alerts_per_fold": 20,
+    "review_fractions": [
+      0.01,
+      0.05
+    ],
+    "cutoff_scenarios": [
+      "2018-12-31",
+      "2019-12-31"
+    ]
+  },
+  "split": {
+    "date_col": "issue_d",
+    "train_end": "2014-12",
+    "val_end": "2016-12"
+  },
+  "python": "3.14.6",
+  "numpy": "2.5.3",
+  "sklearn": "1.9.1",
+  "prediction_time": "After-pricing origination classifier; never pre-pricing regression",
+  "evidence": {
+    "project": "Project.pdf: task-dependent grade/subgrade eligibility and baseline-bureau rules",
+    "issuer": "https://www.sec.gov/Archives/edgar/data/1409970/000119312512325943/d353028d424b3.htm",
+    "issuer_scope": "2012 issuer underwriting/pricing description; not a timestamp certificate for every 2007\u20132018 record"
+  },
+  "bureau_scenario": "Conditional on fields representing original bureau snapshot; deferred fields remain unused",
+  "selection": "Training-CV average precision separately for At risk and Default",
+  "operating_points": "Analytic precision floors only, minimum 20 alerts in every CV fold; not an approved lending policy",
+  "test_policy": "No final test rows read; prior results and predictor plan unchanged"
+}

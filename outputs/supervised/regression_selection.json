@@ -1,0 +1,13 @@
+{
+  "metric": "rmse",
+  "source": "training CV only",
+  "models": {
+    "decision_tree": {
+      "max_depth": 15,
+      "min_samples_leaf": 100
+    },
+    "ridge": {
+      "alpha": 10.0
+    }
+  }
+}

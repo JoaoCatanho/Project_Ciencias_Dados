@@ -1,0 +1,5 @@
+partition,term,Good,At risk,Default
+train,36.0,291735,0,43823
+train,60.0,82825,611,32677
+validation,36.0,427135,4586,88252
+validation,60.0,97460,4905,55804

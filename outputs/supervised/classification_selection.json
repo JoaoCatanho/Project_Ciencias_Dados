@@ -1,0 +1,15 @@
+{
+  "metric": "f1_macro",
+  "source": "training CV only",
+  "models": {
+    "decision_tree": {
+      "class_weight": "balanced",
+      "max_depth": 15,
+      "min_samples_leaf": 500
+    },
+    "logistic": {
+      "C": 1.0,
+      "class_weight": "balanced"
+    }
+  }
+}

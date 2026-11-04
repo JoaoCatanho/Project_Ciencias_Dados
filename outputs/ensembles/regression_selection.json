@@ -1,0 +1,13 @@
+{
+  "metric": "rmse",
+  "source": "training CV only",
+  "models": {
+    "hist_gradient_boosting": {
+      "learning_rate": 0.1,
+      "max_leaf_nodes": 15
+    },
+    "random_forest": {
+      "max_depth": 20
+    }
+  }
+}
